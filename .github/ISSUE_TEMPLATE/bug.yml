@@ -1,0 +1,26 @@
+name: 问题报告
+description: 提供可复现步骤，帮助定位问题
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: "请勿上传 Key、Cookie、登录资料或私人原文。安全漏洞请使用仓库 Security 页的私密报告入口。"
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境
+      description: 操作系统、Node/浏览器版本、提交版本；使用 Web 还是插件？
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 最小复现
+      description: 操作步骤、期望结果、实际结果。用合成内容替代私人材料。
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 必要证据
+      description: 去掉敏感信息的错误文本或截图，注明已尝试的处理。

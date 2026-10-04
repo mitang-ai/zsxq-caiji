@@ -1,0 +1,18 @@
+name: 功能建议
+description: 从你的使用场景说起
+title: "[Feature] "
+body:
+  - type: textarea
+    id: scenario
+    attributes:
+      label: 你想完成什么？
+      description: 现在怎样处理？具体卡在哪里？
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: 希望怎样操作、得到什么？
+      description: 可以补充替代方案及数据/权限边界；不必预先指定实现。
+    validations:
+      required: true
