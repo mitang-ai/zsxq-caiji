@@ -26,6 +26,7 @@ import {
 } from "./api";
 import { normalizeAppearance } from "../../shared/appearance";
 import { AppearanceSelect, type AppearanceProps } from "./Appearance";
+import { QuickAccount } from "./QuickAccount";
 import { LandingPage, PluginsPage } from "./pages/Public";
 import { MaterialsPage, ReaderPage } from "./pages/Materials";
 import { clearMaterialListStates } from "./listState";
@@ -645,6 +646,7 @@ function AuthPage({
     [token, setToken] = useState("");
   const op = useOperation();
   const [requested, setRequested] = useState(false);
+  const [quickActive, setQuickActive] = useState(false);
   async function submit(e: FormEvent) {
     e.preventDefault();
     if (mode === "recovery") {
@@ -689,7 +691,14 @@ function AuthPage({
       <div className="auth-appearance">
         <AppearanceSelect {...appearanceProps} />
       </div>
-      <Link className="brand" to="/welcome">
+      <Link
+        className="brand"
+        to="/welcome"
+        aria-disabled={quickActive || undefined}
+        onClick={(e) => {
+          if (quickActive) e.preventDefault();
+        }}
+      >
         <Icon name="mark" size={28} />
         <strong>集见</strong>
       </Link>
@@ -701,86 +710,100 @@ function AuthPage({
             ? "源站登录与工作台账号是两套独立身份。"
             : "整理原文，留下证据，把讨论变成自己的知识。"}
         </p>
-        <form className="form-stack" onSubmit={submit}>
-          {mode === "register" && (
-            <Field label="称呼" required>
-              <input
-                autoComplete="name"
+        {mode !== "recovery" && (
+          <QuickAccount
+            disabled={op.busy}
+            onActiveChange={setQuickActive}
+            onSuccess={onSuccess}
+          />
+        )}
+        {!quickActive && (
+          <form className="form-stack" onSubmit={submit}>
+            {mode === "register" && (
+              <Field label="称呼" required>
+                <input
+                  autoComplete="name"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  maxLength={80}
+                />
+              </Field>
+            )}
+            {!(mode === "recovery" && token) && (
+              <Field
+                label={mode === "login" ? "邮箱或系统账号" : "邮箱"}
                 required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                maxLength={80}
-              />
-            </Field>
-          )}
-          {!(mode === "recovery" && token) && (
-            <Field label="邮箱" required>
-              <input
-                type="email"
-                autoComplete="username"
+              >
+                <input
+                  type="email"
+                  autoComplete="username"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Field>
+            )}
+            {mode === "recovery" && (
+              <Field
+                label="管理员提供的恢复令牌"
+                hint="已有令牌可直接填写；尚未获得则先提交恢复请求。"
+              >
+                <input
+                  value={token}
+                  autoComplete="off"
+                  onChange={(e) => setToken(e.target.value)}
+                />
+              </Field>
+            )}
+            {(mode !== "recovery" || token) && (
+              <Field
+                label={mode === "recovery" ? "新密码" : "密码"}
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Field>
-          )}
-          {mode === "recovery" && (
-            <Field
-              label="管理员提供的恢复令牌"
-              hint="已有令牌可直接填写；尚未获得则先提交恢复请求。"
-            >
-              <input
-                value={token}
-                autoComplete="off"
-                onChange={(e) => setToken(e.target.value)}
-              />
-            </Field>
-          )}
-          {(mode !== "recovery" || token) && (
-            <Field
-              label={mode === "recovery" ? "新密码" : "密码"}
-              required
-              hint="至少 12 个字符"
-            >
-              <input
-                type="password"
-                required
-                minLength={12}
-                maxLength={128}
-                autoComplete={
-                  mode === "login" ? "current-password" : "new-password"
-                }
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Field>
-          )}
-          <OperationNotice op={op} />
-          {requested && (
-            <p className="field-hint">
-              请联系此工作台实例的管理员取得令牌后完成恢复。
-            </p>
-          )}
-          <Button primary type="submit" busy={op.busy}>
-            {mode === "register"
-              ? "创建账号"
-              : mode === "recovery"
-                ? token
-                  ? "设置新密码"
-                  : "提交恢复请求"
-                : "登录"}
-          </Button>
-        </form>
-        <div className="auth-links">
-          {mode === "login" ? (
-            <>
-              <Link to="/register">创建账号</Link>
-              <Link to="/recovery">找回密码</Link>
-            </>
-          ) : (
-            <Link to="/login">返回登录</Link>
-          )}
-        </div>
+                hint="至少 12 个字符"
+              >
+                <input
+                  type="password"
+                  required
+                  minLength={12}
+                  maxLength={128}
+                  autoComplete={
+                    mode === "login" ? "current-password" : "new-password"
+                  }
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Field>
+            )}
+            <OperationNotice op={op} />
+            {requested && (
+              <p className="field-hint">
+                请联系此工作台实例的管理员取得令牌后完成恢复。
+              </p>
+            )}
+            <Button primary type="submit" busy={op.busy}>
+              {mode === "register"
+                ? "创建账号"
+                : mode === "recovery"
+                  ? token
+                    ? "设置新密码"
+                    : "提交恢复请求"
+                  : "登录"}
+            </Button>
+          </form>
+        )}
+        {!quickActive && (
+          <div className="auth-links">
+            {mode === "login" ? (
+              <>
+                <Link to="/register">创建账号</Link>
+                <Link to="/recovery">找回密码</Link>
+              </>
+            ) : (
+              <Link to="/login">返回登录</Link>
+            )}
+          </div>
+        )}
       </section>
       <p className="auth-footnote">
         知识星球会话和模型凭据单独连接；注册不会采集任何内容。

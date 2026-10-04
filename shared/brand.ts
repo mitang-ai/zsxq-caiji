@@ -2,7 +2,7 @@
 export const brand = {
   name: "集见",
   latin: "JIJIAN",
-  version: "1.2.0",
+  version: "1.2.1",
   tagline: "好内容，别只收藏。",
   description: "把星球里的讨论，整理成用得上的知识。",
   repository: "https://github.com/mitang-ai/zsxq-caiji",

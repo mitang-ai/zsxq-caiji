@@ -6,7 +6,7 @@
 
 ## 安装
 
-1. 从发行页下载 `jijian-chrome-v1.2.0.zip` 或 `jijian-edge-v1.2.0.zip`，解压到固定目录。
+1. 从发行页下载 `jijian-chrome-v1.2.1.zip` 或 `jijian-edge-v1.2.1.zip`，解压到固定目录。
 2. 打开 `chrome://extensions` 或 `edge://extensions`，启用「开发者模式」。
 3. 点击「加载已解压的扩展」，选择含 `manifest.json` 的目录。
 4. 固定工具栏图标，点击打开侧栏。完整页面用于阅读、选材、加工和导出；快捷键是 `Alt+Shift+J`，被占用时可在浏览器快捷键设置中调整。

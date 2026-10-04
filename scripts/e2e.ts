@@ -142,6 +142,11 @@ try {
     })
     .click();
   await page.getByRole("heading", { name: "验收原文", exact: true }).waitFor();
+  // The title renders before the selected revision is initialized by its effect.
+  await page
+    .locator(".reader-body")
+    .filter({ hasText: "出处与人工加工" })
+    .waitFor();
   assert.match(
     await page.locator(".reader-body").innerText(),
     /出处与人工加工/,

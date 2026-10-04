@@ -108,7 +108,7 @@ export async function createApp(
   app.get("/api/health", () => ({
     status: "ok",
     service: "xingjian",
-    version: "1.2.0",
+    version: "1.2.1",
     product: "集见",
     execution: "serial",
     database: "sqlite-wal",

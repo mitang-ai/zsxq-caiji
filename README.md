@@ -59,6 +59,8 @@
 
 ## 快速开始
 
+在线使用可在 [登录页](https://zsxq.51wanai.com/login) 点击「一键创建账号密码」，或填写邮箱手动注册。自动账号不是邮箱；创建后请复制或下载账密，确认已妥善保存再进入工作台。**下载文件含明文密码，请存入密码管理器或加密位置，不要公开分享。** 详见 [账号使用说明](docs/accounts.md)。
+
 准备 **Node.js 24.14+**，推荐使用 `24.14.1`。网页登录需要 Playwright Chromium；Linux 还需对应系统依赖，见 [运行手册](docs/runbook.md)。
 
 ```bash
@@ -117,6 +119,7 @@ npm run build
 npm run test:e2e
 npm run package:extensions
 npm run test:brand
+npm run test:auth
 npm run test:ops
 ```
 

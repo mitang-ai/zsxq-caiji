@@ -3224,3 +3224,41 @@ td code {
     max-width: 96px;
   }
 }
+
+.quick-account {
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+.quick-account > .button {
+  width: 100%;
+}
+.quick-account > .field {
+  margin-bottom: 14px;
+}
+.quick-account > .field-hint {
+  display: block;
+  margin: 8px 0;
+}
+.credential-warning {
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 12px 0 0;
+}
+.credential-warning strong {
+  font-weight: 600;
+}
+.quick-account .form-actions {
+  justify-content: flex-start;
+  margin: 12px 0;
+}
+.quick-account .form-actions .button {
+  font-size: 13px;
+}
+.quick-account > .check {
+  font-size: 13px;
+  margin: 20px 0 14px;
+}
+.auth-shell > .brand[aria-disabled="true"] {
+  cursor: default;
+}

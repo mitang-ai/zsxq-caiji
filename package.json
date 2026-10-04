@@ -1,7 +1,7 @@
 {
   "name": "xingjian-workbench",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
   "engines": {
     "node": ">=24.14.0"
@@ -22,7 +22,8 @@
     "format:check": "prettier --check server shared scripts/*.ts scripts/*.mjs tests web/src web/tests/*.ts extension/*.ts",
     "assets:brand": "tsx scripts/brand-assets.ts",
     "package:extensions": "tsx scripts/package-extensions.ts",
-    "test:brand": "tsx scripts/brand-e2e.ts"
+    "test:brand": "tsx scripts/brand-e2e.ts",
+    "test:auth": "tsx scripts/quick-account-e2e.ts"
   },
   "dependencies": {
     "@fastify/cookie": "^11.0.2",

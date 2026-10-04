@@ -1,6 +1,6 @@
 # Web 前端
 
-React 19 / TypeScript / Vite。四主题与响应式布局使用 `src/styles.css` 的语义 tokens；所有业务页请求 `docs/contracts.md` 中的真实 API，不填充示例用户材料。
+React 19 / TypeScript / Vite。中性浅色、深色、跟随系统与响应式布局使用 `src/styles.css` 的语义 tokens；所有业务页请求 `docs/contracts.md` 中的真实 API，不填充示例用户材料。
 
 ## 运行与验证
 
@@ -12,7 +12,7 @@ React 19 / TypeScript / Vite。四主题与响应式布局使用 `src/styles.css
 - `node --import tsx --test web/tests/transfer.test.ts web/tests/listState.test.ts`：仅使用隔离内存 fixture 与 mock fetch，检查 ZIP/哈希/凭据拒绝/分片重试和列表状态隔离。
 - `node --import tsx web/tests/render.mts`：**仅允许 4320 隔离 review 实例**。通过真实 Chrome UI 注册独立验收账号并导入合成材料。不会访问 4318 正式用户数据，不登录或采集源站，不调用真实模型。
 - `node --import tsx web/tests/advanced.mts`：同一隔离实例，实际 ZIP 原件上传与下载读回、完整原文引用、团队明确分享、阅读返回状态、新提案手动审批计划；模型调用停在待批准。
-- `node --import tsx web/tests/recovery.mts`：真实 Edge 渲染，任务 API 使用明确的 Playwright route fixture，检查失败项重试 UI、预算恢复边界、四主题焦点与响应式。不是采集 runtime 或外部源站验证。
+- `node --import tsx web/tests/recovery.mts`：真实 Edge 渲染，任务 API 使用明确的 Playwright route fixture，检查失败项重试 UI、预算恢复边界、明暗主题焦点与响应式。不是采集 runtime 或外部源站验证。
 - `node --import tsx web/tests/models.mts`：隔离账号、真实配置保存，Provider 发现/测试传输为 route fixture，覆盖未填模型先发现、未保存、旧 Key 目的地限制、错误与响应可见性。
 - `node --import tsx web/tests/taskExport.mts`：固定任务回执的分批 JSON 下载读回，任务 API 为 route fixture；不会回退成全空间导出，不含原件。
 - `node --import tsx web/tests/largeList.mts`：真实隔离 API 导入 1000 条合成材料，逐批显示、长字段、远滚动阅读返回、离线后重试；不是持续压测或生产容量结论。
@@ -38,3 +38,5 @@ React 19 / TypeScript / Vite。四主题与响应式布局使用 `src/styles.css
 ## 尚待外部验收
 
 真实星球登录/身份挑战/当前成员采集、真实 Provider 模型发现与调用、AI 生成提案后采纳、外部 Agent 与插件配对均不能由本地 fixture 推断成功。200% CSS zoom 的布局检查不替代 OS DPI 或浏览器原生缩放验收。
+
+- `npm.cmd run test:auth`：最终构建上的一键账号隔离端到端验收，包含保存、重试及再次登录。
