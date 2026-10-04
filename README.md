@@ -2,17 +2,17 @@
 
 <img src="docs/assets/brand/mark.svg" alt="集见：一页被接住" width="80" />
 
-# 集见 · JIJIAN
+# 集见 JIJIAN
 
 **好内容，别只收藏。**
 
 把星球里的讨论，整理成用得上的知识。
 
-知识星球采集 · Chrome / Edge 插件 · 受控 Agent 工作台
+知识星球采集，Chrome 和 Edge 本地插件，受控 Agent 工作台
 
 [![在线体验](https://img.shields.io/badge/在线体验-打开工作台-18181B?style=for-the-badge)](https://zsxq.51wanai.com/)
 [![快速开始](https://img.shields.io/badge/快速开始-本地运行-18181B?style=for-the-badge)](#快速开始)
-[![插件安装](https://img.shields.io/badge/插件安装-Chrome%20%2F%20Edge-18181B?style=for-the-badge)](https://github.com/mitang-ai/zsxq-caiji/releases/latest)
+[![插件安装](https://img.shields.io/badge/插件安装-Chrome%20%26%20Edge-18181B?style=for-the-badge)](https://github.com/mitang-ai/zsxq-caiji/releases/latest)
 
 [![CI](https://github.com/mitang-ai/zsxq-caiji/actions/workflows/ci.yml/badge.svg)](https://github.com/mitang-ai/zsxq-caiji/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-52525B?style=flat-square)](LICENSE)
@@ -20,7 +20,7 @@
 [![Release](https://img.shields.io/github/v/release/mitang-ai/zsxq-caiji?style=flat-square&color=52525B)](https://github.com/mitang-ai/zsxq-caiji/releases/latest)
 [![GitHub stars](https://img.shields.io/github/stars/mitang-ai/zsxq-caiji?style=flat-square&color=52525B)](https://github.com/mitang-ai/zsxq-caiji/stargazers)
 
-[能做什么](#能做什么) · [两种用法](#两种用法) · [快速开始](#快速开始) · [浏览器插件](#浏览器插件) · [文档与协作](#文档与协作)
+[能做什么](#能做什么)　[两种用法](#两种用法)　[快速开始](#快速开始)　[浏览器插件](#浏览器插件)　[文档与协作](#文档与协作)
 
 <img src="docs/assets/knowledge-flow.png" alt="流程示意：保留原文，整理选材，人工批准，再生成可编辑的引用成果；不是界面截图" width="900" />
 
@@ -115,8 +115,8 @@ npm run format:check
 npm test
 npm run build
 npm run test:e2e
-npm run test:brand
 npm run package:extensions
+npm run test:brand
 npm run test:ops
 ```
 
@@ -126,16 +126,16 @@ npm run test:ops
 
 ## 文档与协作
 
-[插件安装](docs/plugin-install.md) · [更新记录](CHANGELOG.md) · [品牌资产](docs/brand.md) · [正式发行](https://github.com/mitang-ai/zsxq-caiji/releases/latest)
+[插件安装](docs/plugin-install.md)　[更新记录](CHANGELOG.md)　[品牌资产](docs/brand.md)　[前端规范](docs/frontend-style.md)　[正式发行](https://github.com/mitang-ai/zsxq-caiji/releases/latest)
 
 | 想了解 | 从这里看 |
 | :--- | :--- |
 | 完整功能与限制 | [功能说明](docs/features.md) |
-| 服务、存储和权限边界 | [架构](docs/architecture.md) · [数据与 MCP 契约](docs/contracts.md) |
+| 服务、存储和权限边界 | [架构](docs/architecture.md)　[数据与 MCP 契约](docs/contracts.md) |
 | 启停、冷备、账号恢复和故障处理 | [运行手册](docs/runbook.md) |
 | 本地制作 Linux 发行包 | [发行说明](docs/release.md) |
 | 测试覆盖与未验证项 | [验证说明](docs/verification.md) |
-| 提交修改或报告问题 | [贡献指南](CONTRIBUTING.md) · [安全报告](SECURITY.md) |
+| 提交修改或报告问题 | [贡献指南](CONTRIBUTING.md)　[安全报告](SECURITY.md) |
 
 后续重点是外部知识系统接入、更多真实来源样本的回归覆盖，以及浏览器商店交付。接口先保持版本化，不通过共享账号、Cookie 或数据库连接产品。
 
@@ -143,11 +143,11 @@ npm run test:ops
 
 <div align="center">
 
-[提交问题](https://github.com/mitang-ai/zsxq-caiji/issues/new/choose) · [查看代码](https://github.com/mitang-ai/zsxq-caiji) · [在线工作台](https://zsxq.51wanai.com/)
+[提交问题](https://github.com/mitang-ai/zsxq-caiji/issues/new/choose)　[查看代码](https://github.com/mitang-ai/zsxq-caiji)　[在线工作台](https://zsxq.51wanai.com/)
 
 如果它帮你把讨论变成了可用的资料，欢迎点一颗 Star，也欢迎带着可复现的问题参与改进。
 
-**MIT License · 米汤**
+**MIT License，米汤**
 
 本项目是独立工具，非知识星球官方产品。两张配图为 AI 生成的流程示意，不是产品截图。
 

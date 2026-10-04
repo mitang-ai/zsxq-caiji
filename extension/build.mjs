@@ -40,7 +40,7 @@ for (const browser of ["chrome", "edge"]) {
     );
   const manifest = {
     manifest_version: 3,
-    name: "集见 · 知识星球本地工作台",
+    name: "集见知识星球本地工作台",
     version,
     description:
       "在自己已登录的知识星球中保存资料，独立本地加工与导出，并显式同步到自己的工作台。",

@@ -132,8 +132,8 @@ export function ProjectsPage() {
                 <Badge value={d.mode} />
                 <span>
                   {d.rule?.q ? `关键词：${d.rule.q}` : "手动选材"}
-                  {d.rule?.group_id ? ` · 星球 ${d.rule.group_id}` : ""}
-                  {d.rule?.author_id ? ` · 成员 ${d.rule.author_id}` : ""}
+                  {d.rule?.group_id ? `，星球 ${d.rule.group_id}` : ""}
+                  {d.rule?.author_id ? `，成员 ${d.rule.author_id}` : ""}
                 </span>
                 <Link
                   className="button"
@@ -172,7 +172,7 @@ export function ProjectsPage() {
                       <div>
                         <strong>{m.title || "无标题材料"}</strong>
                         <span className="muted">
-                          {m.author_name ?? "作者未提供"} · {date(m.created_at)}
+                          {m.author_name ?? "作者未提供"}，{date(m.created_at)}
                         </span>
                       </div>
                       <Badge value={m.status} />
@@ -219,7 +219,7 @@ export function ProjectsPage() {
                 </div>
               ) : d.snapshots?.length ? (
                 <details className="panel">
-                  <summary>{d.snapshots.length} 份快照 · 查看版本记录</summary>
+                  <summary>{d.snapshots.length} 份快照，查看版本记录</summary>
                   <pre className="json-view">
                     {JSON.stringify(d.snapshots, null, 2)}
                   </pre>
@@ -322,7 +322,7 @@ export function ProjectsPage() {
                     />
                   </Field>
                 </div>
-                <Field label="个人标签 · 逗号分隔">
+                <Field label="个人标签，逗号分隔">
                   <input
                     value={tags}
                     onChange={(e) => setTags(e.target.value)}

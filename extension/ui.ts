@@ -1,3 +1,4 @@
+import { normalizeAppearance, resolvedAppearance } from "../shared/appearance";
 import { zipSync, strToU8, strFromU8 } from "fflate";
 import { readArchive, assertNoCredentials } from "./archive";
 import {
@@ -353,31 +354,27 @@ function render(): void {
     ),
   );
   const menu = e("nav", { "aria-label": "本地导航" });
-  for (const [id, label, icon] of nav) {
+  for (const [id, label] of nav) {
     if (
       compact &&
       !["capture", "library", "process", "sync", "settings"].includes(id)
     )
       continue;
     menu.append(
-      b(
-        icon + " " + label,
-        () => navigate(id),
-        page === id ? "nav active" : "nav",
-      ),
+      b(label, () => navigate(id), page === id ? "nav active" : "nav"),
     );
   }
   sidebar.append(
     menu,
     b("打开完整工作台", () => openFull()),
-    small(target ? "已配对 · 资料不会自动上传" : "仅本机保存 · 未连接工作台"),
+    small(target ? "已配对，资料不会自动上传" : "仅本机保存，未连接工作台"),
   );
   root.append(sidebar);
   const shell = e("section", { class: "shell" });
   const top = e(
     "div",
     { class: "topbar" },
-    e("span", {}, "扩展 / " + nav.find((n) => n[0] === page)?.[1]),
+    e("span", {}, "本地工作台：" + nav.find((n) => n[0] === page)?.[1]),
     line(
       b("搜索资料", () => {
         navigate("library");
@@ -488,7 +485,7 @@ function renderCapture(main: HTMLElement): void {
           small(
             "当前源站账号：" +
               String(d.user?.name ?? d.name ?? "已验证") +
-              " · " +
+              "，" +
               String(d.user?.user_id ?? d.user_id ?? ""),
           ),
           small(c.url),
@@ -501,7 +498,7 @@ function renderCapture(main: HTMLElement): void {
           "选择已加入星球",
           [
             { value: "", label: "请选择" },
-            ...gs.map((g) => ({ value: g.id, label: g.name + " · " + g.id })),
+            ...gs.map((g) => ({ value: g.id, label: g.name + "，" + g.id })),
           ],
           "",
           "source_group",
@@ -538,7 +535,7 @@ function renderCapture(main: HTMLElement): void {
       const rows = await members(val(form, "group_id"), val(memberSearch, "q"));
       sourceInfo.replaceChildren(
         ...rows.map((m) =>
-          b(m.name + " · " + m.id, () => {
+          b(m.name + "，" + m.id, () => {
             (
               form.querySelector('[name="author_id"]') as HTMLInputElement
             ).value = m.id;
@@ -649,9 +646,9 @@ function materialRow(m: Material): HTMLElement {
       line(
         small(
           m.author_name +
-            " · 星球 " +
+            "，星球 " +
             m.group_id +
-            " · " +
+            "，" +
             m.source_key.entity_type,
         ),
         badge(
@@ -841,9 +838,9 @@ function renderReader(main: HTMLElement): void {
       m.title,
       "作者 " +
         m.author_name +
-        " · 当前星球 " +
+        "，当前星球 " +
         m.group_id +
-        " · " +
+        "，" +
         m.source_key.entity_type,
       b("返回资料库", () => {
         openedMaterial = "";
@@ -995,14 +992,14 @@ function renderReader(main: HTMLElement): void {
   const versions = e(
     "details",
     {},
-    e("summary", {}, "来源版本 · " + m.revisions.length),
+    e("summary", {}, "来源版本，" + m.revisions.length),
   );
   for (const r of [...m.revisions].reverse())
     versions.append(
       e(
         "section",
         { class: "version" },
-        small(timestamp(r.captured_at) + " · " + r.id),
+        small(timestamp(r.captured_at) + "，" + r.id),
         e("pre", {}, r.text),
       ),
     );
@@ -1050,7 +1047,7 @@ function renderReader(main: HTMLElement): void {
     for (const a of localFiles)
       main.append(
         line(
-          e("span", {}, a.name + " · " + a.size + " bytes · " + a.status),
+          e("span", {}, a.name + "，" + a.size + " bytes，" + a.status),
           b("下载本机原件", () => {
             if (!a.blob) throw new Error("原件不在本机。");
             download(a.name, a.blob);
@@ -1178,9 +1175,7 @@ function renderDatasets(main: HTMLElement): void {
         small(
           rows.length +
             " 条当前资料" +
-            (d.snapshot
-              ? " · 已冻结 " + d.snapshot.length + " 条来源修订"
-              : ""),
+            (d.snapshot ? "，已冻结 " + d.snapshot.length + " 条来源修订" : ""),
         ),
         line(
           b("查看材料", () => {
@@ -1394,7 +1389,7 @@ function renderProcess(main: HTMLElement): void {
     area("你的目标", "", "goal"),
     select(
       "模型服务",
-      providers.map((p) => ({ value: p.id, label: p.label + " / " + p.model })),
+      providers.map((p) => ({ value: p.id, label: p.label + "，" + p.model })),
       providers[0]?.id,
       "provider_id",
     ),
@@ -1448,9 +1443,9 @@ function renderProcess(main: HTMLElement): void {
       small(
         "外发目的地：" +
           new URL(p.base_url).origin +
-          " · 协议 " +
+          "，协议 " +
           p.protocol +
-          " · 模型 " +
+          "，模型 " +
           p.model,
       ),
       small(
@@ -1470,9 +1465,9 @@ function renderProcess(main: HTMLElement): void {
               source.label +
               "] " +
               source.title +
-              " · " +
+              "，" +
               source.author +
-              " · " +
+              "，" +
               source.type,
           ),
           e("pre", {}, source.text),
@@ -1613,7 +1608,7 @@ function artifactMarkdown(a: Artifact): string {
     a.citations
       .map(
         (c) =>
-          `- [${c.citation_id ?? "来源"}] ${c.source_url ?? ""} · 版本 ${c.revision_id} · ${c.source_key?.group_id ?? ""}`,
+          `- [${c.citation_id ?? "来源"}] ${c.source_url ?? ""}，版本 ${c.revision_id}，${c.source_key?.group_id ?? ""}`,
       )
       .join("\n") +
     "\n\n" +
@@ -1631,7 +1626,7 @@ function renderArtifact(main: HTMLElement): void {
       a.title,
       "修订 " +
         a.revision +
-        " · " +
+        "，" +
         (a.status === "adopted" ? "人工采纳" : "草稿"),
       b("返回成果", () => {
         openedArtifact = "";
@@ -1746,14 +1741,14 @@ function renderArtifact(main: HTMLElement): void {
   const history = e(
     "details",
     {},
-    e("summary", {}, "人工编辑历史 · " + a.revisions.length),
+    e("summary", {}, "人工编辑历史，" + a.revisions.length),
   );
   for (const r of [...a.revisions].reverse())
     history.append(
       e(
         "section",
         {},
-        e("h3", {}, "修订 " + r.revision + " · " + r.title),
+        e("h3", {}, "修订 " + r.revision + "，" + r.title),
         e("pre", {}, r.body),
         b("以此版本新建人工草稿", async () => {
           const at = now();
@@ -1836,7 +1831,7 @@ function renderJobs(main: HTMLElement): void {
   const labels: Record<string, string> = {
     queued: "待开始",
     running: "运行中",
-    paused: "已暂停 / 等待恢复",
+    paused: "已暂停，等待恢复",
     unknown: "计费结果未知",
     partial: "部分完成",
     complete: "已完成",
@@ -1852,19 +1847,19 @@ function renderJobs(main: HTMLElement): void {
         open: ["running", "unknown", "paused"].includes(job.status),
         class: "job",
       },
-      e("summary", {}, job.title + " · " + labels[job.status]),
+      e("summary", {}, job.title + "，" + labels[job.status]),
       small(timestamp(job.updated_at)),
       job.reason ? small(job.reason) : null,
       small(
         job.kind === "capture"
           ? "已读 " +
               (job.checkpoint.page ?? 0) +
-              " 页 / 保存 " +
+              " 页，保存 " +
               (job.checkpoint.saved ?? 0) +
               " 条"
           : "已保存响应 " +
               (job.checkpoint.outputs?.length ?? 0) +
-              " / 计费尝试 " +
+              "，计费尝试 " +
               (job.checkpoint.attempts_used ?? 0) +
               "/" +
               (job.checkpoint.max_calls ?? "—"),
@@ -1964,10 +1959,8 @@ function renderSettings(main: HTMLElement): void {
     e("h2", {}, "外观与阅读"),
   );
   for (const [id, label] of [
-    ["paper", "纸白"],
-    ["warm", "暖纸"],
-    ["graphite", "石墨黑"],
-    ["mist", "雾蓝"],
+    ["paper", "浅色"],
+    ["graphite", "深色"],
   ])
     appearances.append(
       b(label, async () => {
@@ -1976,7 +1969,7 @@ function renderSettings(main: HTMLElement): void {
       }),
     );
   appearances.append(
-    b("随系统", async () => {
+    b("跟随系统", async () => {
       await setMeta("theme", "system");
       document.documentElement.dataset.theme = matchMedia(
         "(prefers-color-scheme: dark)",
@@ -2105,8 +2098,8 @@ function renderSettings(main: HTMLElement): void {
       e(
         "section",
         { class: "provider" },
-        e("h3", {}, p.label + " / " + p.model),
-        small(p.protocol + " · " + p.base_url),
+        e("h3", {}, p.label + "，" + p.model),
+        small(p.protocol + "，" + p.base_url),
         p.tested_at
           ? small(
               "实际调用验证：" +
@@ -2314,7 +2307,7 @@ function renderSync(main: HTMLElement): void {
         "div",
         { class: "scope-bar" },
         e("strong", {}, "目的地：" + target.origin),
-        small("设备绑定空间：" + target.workspace_id + " · " + target.label),
+        small("设备绑定空间：" + target.workspace_id + "，" + target.label),
         b("解除本机配对", async () => {
           if (
             !confirm(
@@ -2381,9 +2374,7 @@ function renderSync(main: HTMLElement): void {
       );
       for (const r of bundle.records)
         preview.append(
-          small(
-            r.title + " · " + r.author_name + " · " + r.source_key.group_id,
-          ),
+          small(r.title + "，" + r.author_name + "，" + r.source_key.group_id),
         );
       if (target)
         preview.append(
@@ -2451,7 +2442,7 @@ function renderSync(main: HTMLElement): void {
         e(
           "details",
           {},
-          e("summary", {}, j.title + " · " + timestamp(j.updated_at)),
+          e("summary", {}, j.title + "，" + timestamp(j.updated_at)),
           e("pre", {}, JSON.stringify(j.checkpoint.receipt, null, 2)),
         ),
       );
@@ -2672,13 +2663,20 @@ void (async () => {
         if (lock) await recoverInterruptedJobs();
       },
     );
-    const theme = await meta("theme", "system");
-    document.documentElement.dataset.theme =
-      theme === "system"
-        ? matchMedia("(prefers-color-scheme: dark)").matches
-          ? "graphite"
-          : "paper"
-        : theme;
+    const theme = normalizeAppearance(await meta("theme", "system"));
+    const media = matchMedia("(prefers-color-scheme: dark)");
+    document.documentElement.dataset.theme = resolvedAppearance(
+      theme,
+      media.matches,
+    );
+    media.addEventListener("change", async () => {
+      if (normalizeAppearance(await meta("theme", "system")) === "system") {
+        document.documentElement.dataset.theme = resolvedAppearance(
+          "system",
+          media.matches,
+        );
+      }
+    });
     document.documentElement.style.setProperty(
       "--reader-size",
       (await meta("reader-size", 17)) + "px",

@@ -250,7 +250,7 @@ export function createBundle(
     schema_version: 1 as const,
     bundle_id: input.bundle_id ?? crypto.randomUUID(),
     exported_at: input.exported_at ?? new Date().toISOString(),
-    producer: input.producer ?? { name: "集见", version: "1.1.0" },
+    producer: input.producer ?? { name: "集见", version: "1.2.0" },
     records: input.records ?? [],
     annotations: input.annotations ?? [],
     artifacts: input.artifacts ?? [],

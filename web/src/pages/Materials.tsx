@@ -388,7 +388,7 @@ export function MaterialsPage({ inbox = false }: { inbox?: boolean }) {
                   {materials.length} 条{q ? "匹配资料" : "资料"}
                 </span>
               </label>
-              <span>原文 · 个人状态</span>
+              <span>原文，个人状态</span>
             </div>
             {visible.map((m) => (
               <article
@@ -464,7 +464,7 @@ export function MaterialsPage({ inbox = false }: { inbox?: boolean }) {
             {materials.length > limit && (
               <div className="load-more">
                 <Button onClick={() => setLimit((n) => n + 100)}>
-                  再显示 100 条 · 剩余 {materials.length - limit}
+                  再显示 100 条，剩余 {materials.length - limit}
                 </Button>
               </div>
             )}
@@ -568,7 +568,7 @@ export function MaterialsPage({ inbox = false }: { inbox?: boolean }) {
           description="本次标签将替换所选材料的个人标签，不修改源站。"
           onClose={() => setTagging(false)}
         >
-          <Field label="标签 · 用逗号分隔">
+          <Field label="标签，用逗号分隔">
             <input
               value={tags}
               onChange={(e) => setTags(e.target.value)}
@@ -717,11 +717,11 @@ function SourceAssetInfo({
           <div className="grow">
             <strong>{f.name}</strong>
             <span className="muted small">
-              {f.mime || "类型未提供"} ·{" "}
+              {f.mime || "类型未提供"} ，{" "}
               {f.size === undefined
                 ? "大小未提供"
                 : `${(f.size / 1024).toFixed(1)} KB`}{" "}
-              · 来源文件元信息
+              ，来源文件元信息
             </span>
           </div>
         </div>
@@ -1042,7 +1042,7 @@ export function ReaderPage() {
                             <div>
                               <strong>{a.name ?? a.filename ?? a.id}</strong>
                               <span className="muted">
-                                {a.mime ?? "类型未提供"} ·{" "}
+                                {a.mime ?? "类型未提供"} ，{" "}
                                 {a.size
                                   ? `${(a.size / 1024).toFixed(1)} KB`
                                   : "大小未提供"}
@@ -1066,7 +1066,8 @@ export function ReaderPage() {
                               a.parse_reason) && (
                               <details className="attachment-extraction">
                                 <summary>
-                                  解析结果 · <Badge value={a.parse_state} />
+                                  解析结果，
+                                  <Badge value={a.parse_state} />
                                 </summary>
                                 {a.parse_reason && (
                                   <p className="muted">{a.parse_reason}</p>
@@ -1167,7 +1168,7 @@ export function ReaderPage() {
                   {selection.quote}
                 </blockquote>
                 <p className="field-hint">
-                  固定版本 {revisionId} · 字符 {selection.start}–{selection.end}
+                  固定版本 {revisionId}，字符 {selection.start}–{selection.end}
                 </p>
                 <Field label="我的理解" required>
                   <textarea

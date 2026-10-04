@@ -88,7 +88,7 @@ export function ModelSettings() {
                   <div>
                     <h3>{p.label}</h3>
                     <p className="muted wrap-anywhere">
-                      {p.base_url} · {p.protocol}
+                      {p.base_url}，{p.protocol}
                     </p>
                   </div>
                   <Badge>{p.has_key ? "Key 已保存" : "未配置 Key"}</Badge>
@@ -128,7 +128,7 @@ export function ModelSettings() {
       </LoadState>
       {result && !test && (
         <section className="panel">
-          <h3>真实测试结果 · {result.label}</h3>
+          <h3>真实测试结果，{result.label}</h3>
           <p className="muted wrap-anywhere">目的地：{result.destination}</p>
           <ProviderTestResult value={result.data} mode={result.mode} />
           <Button onClick={() => setResult(undefined)}>清除结果</Button>
@@ -332,9 +332,9 @@ function ProviderForm({
         <Field
           label={
             needsNewKey
-              ? "API Key · 新地址必须重新填写"
+              ? "API Key，新地址必须重新填写"
               : provider
-                ? "API Key · 留空保留现有 Key"
+                ? "API Key，留空保留现有 Key"
                 : "API Key"
           }
           required={!provider || needsNewKey}
@@ -418,7 +418,7 @@ function ProviderForm({
             ))}
           </datalist>
         </Field>
-        <Field label="手动快捷模型 · 每行一个">
+        <Field label="手动快捷模型，每行一个">
           <textarea
             rows={3}
             disabled={op.busy}
@@ -521,7 +521,7 @@ function ModelSelection({
     });
   }
   return (
-    <Dialog title="快捷模型 · 单选默认，多选收藏" onClose={onClose}>
+    <Dialog title="快捷模型，单选默认，多选收藏" onClose={onClose}>
       <div className="form-stack">
         <div className="inline-input">
           <input

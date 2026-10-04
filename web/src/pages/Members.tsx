@@ -99,7 +99,7 @@ export function MembersPage() {
       const result = await api<Dataset>(endpoint(wid, "/datasets"), {
         method: "POST",
         body: {
-          name: `${member?.name ?? member?.user?.name ?? memberId} · 星球 ${group} 的研究`,
+          name: `${member?.name ?? member?.user?.name ?? memberId}，星球 ${group} 的研究`,
           mode: "dynamic",
           material_ids: [],
           rule: { group_id: group, author_id: memberId },
@@ -143,7 +143,7 @@ export function MembersPage() {
                   <option value="">请选择连接</option>
                   {(connections.data ?? []).map((c) => (
                     <option key={c.id} value={c.id}>
-                      {c.label} ·{" "}
+                      {c.label} ，{" "}
                       {c.channel === "browser" ? "工作台浏览器" : "官方"}
                     </option>
                   ))}
@@ -171,7 +171,7 @@ export function MembersPage() {
                       (g) => (g.group_id ?? g.id) === group,
                     ) && (
                       <option value={group}>
-                        指定星球 {group} · 需核验来源
+                        指定星球 {group}，需核验来源
                       </option>
                     )}
                 </select>
@@ -223,7 +223,7 @@ export function MembersPage() {
                                 {m.name ?? m.nickname ?? m.user?.name ?? mid}
                               </strong>
                               <small>
-                                {m.role || "星球成员"} · {mid}
+                                {m.role || "星球成员"}，{mid}
                               </small>
                             </span>
                           </button>
@@ -245,7 +245,7 @@ export function MembersPage() {
                             {member.name ?? member.user?.name ?? memberId}
                           </h2>
                           <p className="muted">
-                            只限星球 {group} · 成员 {memberId}
+                            只限星球 {group}，成员 {memberId}
                           </p>
                         </div>
                         <div className="header-actions">
@@ -271,7 +271,7 @@ export function MembersPage() {
                             onClick={() => setCategory(type)}
                             className={category === type ? "active" : ""}
                           >
-                            {label} ·{" "}
+                            {label} ，{" "}
                             {
                               (materialResource.data ?? []).filter(
                                 (m) => (m.entity_type ?? "topic") === type,
@@ -309,7 +309,7 @@ export function MembersPage() {
                                 <div>
                                   <strong>{m.title || "无标题材料"}</strong>
                                   <span className="muted">
-                                    {date(m.created_at)} · 当前星球
+                                    {date(m.created_at)}，当前星球
                                   </span>
                                 </div>
                                 <Badge value={m.status} />

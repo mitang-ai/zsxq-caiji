@@ -142,6 +142,54 @@ for (const channel of ["chrome", "msedge"] as const) {
       path: resolve(`test-output/extension-${channel}.png`),
       fullPage: true,
     });
+    await page.getByRole("button", { name: "设置", exact: true }).click();
+    await page.getByRole("heading", { name: "设置", exact: true }).waitFor();
+    for (const [theme, color] of [
+      ["paper", "rgb(255, 255, 255)"],
+      ["graphite", "rgb(24, 24, 24)"],
+    ] as const) {
+      await page
+        .getByRole("button", {
+          name: theme === "paper" ? "浅色" : "深色",
+          exact: true,
+        })
+        .click();
+      await page.waitForFunction(
+        (t) => document.documentElement.dataset.theme === t,
+        theme,
+      );
+      assert.equal(
+        await page
+          .locator("body")
+          .evaluate((e) => getComputedStyle(e).backgroundColor),
+        color,
+      );
+    }
+    await page.reload();
+    await page.waitForFunction(
+      () => document.documentElement.dataset.theme === "graphite",
+    );
+    await page.getByRole("button", { name: "设置", exact: true }).click();
+    await page.emulateMedia({ colorScheme: "light" });
+    await page.getByRole("button", { name: "跟随系统", exact: true }).click();
+    await page.waitForFunction(
+      () => document.documentElement.dataset.theme === "paper",
+    );
+    await page.emulateMedia({ colorScheme: "dark" });
+    await page.waitForFunction(
+      () => document.documentElement.dataset.theme === "graphite",
+    );
+    await page.getByRole("button", { name: "浅色", exact: true }).click();
+    await page.emulateMedia({ colorScheme: "light" });
+    await page.emulateMedia({ colorScheme: "dark" });
+    assert.equal(
+      await page.locator("html").getAttribute("data-theme"),
+      "paper",
+    );
+    await page.screenshot({
+      path: resolve(`test-output/extension-${channel}-appearance.png`),
+      fullPage: true,
+    });
     const side = await context.newPage();
     await side.goto(`chrome-extension://${result.id}/sidepanel.html`);
     await side
@@ -160,6 +208,7 @@ for (const channel of ["chrome", "msedge"] as const) {
       zip_digest_readback: true,
       persistence_reload: true,
       sidepanel_render: true,
+      light_dark_system_and_reload: true,
       page_errors: errors,
     });
   } catch (e: any) {

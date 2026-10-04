@@ -279,7 +279,7 @@ export function ProcessPage() {
                     <option value="">选择专题</option>
                     {datasets.data?.map((d) => (
                       <option key={d.id} value={d.id}>
-                        {d.name} · {statusLabel(d.mode)}
+                        {d.name}，{statusLabel(d.mode)}
                       </option>
                     ))}
                   </select>
@@ -432,7 +432,7 @@ export function ProcessPage() {
                   <Link to={`/recipes/${r.id}`}>
                     <strong>{r.name}</strong>
                     <span className="muted">
-                      {r.model} ·{" "}
+                      {r.model} ，{" "}
                       {r.approval === "automatic"
                         ? "范围内自动审批"
                         : "手动审批"}
@@ -509,7 +509,7 @@ export function ProcessPage() {
             <div>
               <dt>预算</dt>
               <dd>
-                最多 {calls} 次调用 · 单次输出不超过 {maxTokens} tokens ·
+                最多 {calls} 次调用，单次输出不超过 {maxTokens} tokens ，
                 输入上限 {inputLimit} 字符
               </dd>
             </div>

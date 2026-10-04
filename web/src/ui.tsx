@@ -22,7 +22,7 @@ import type {
 } from "./types";
 
 export type Preferences = {
-  theme: "system" | "paper" | "warm" | "graphite" | "mist";
+  theme: "system" | "paper" | "graphite";
   density: "comfortable" | "compact";
   reader: number;
   contrast: boolean;
@@ -306,7 +306,7 @@ export function Field({
     <label className="field">
       <span className="field-label">
         {label}
-        {required && <span className="muted"> · 必填</span>}
+        {required && <span className="muted">，必填</span>}
       </span>
       {children}
       {hint && <span className="field-hint">{hint}</span>}
@@ -570,7 +570,7 @@ export function MaterialPicker({
               <div>
                 <strong>{m.title || "无标题材料"}</strong>
                 <span className="muted">
-                  {m.author_name || "作者未提供"} · {date(m.created_at)}
+                  {m.author_name || "作者未提供"}，{date(m.created_at)}
                 </span>
               </div>
             </label>
@@ -833,7 +833,7 @@ export function CaptureDialog({
               先建立独立的网页登录或官方连接。
             </Notice>
           ) : (
-            <Field label="来源连接 · 工作台托管浏览器或官方通道" required>
+            <Field label="来源连接，工作台托管浏览器或官方通道" required>
               <select
                 required
                 value={conn}
@@ -849,8 +849,8 @@ export function CaptureDialog({
                     value={c.id}
                     disabled={(c.state ?? c.status) !== "ready"}
                   >
-                    {c.label} ·{" "}
-                    {c.channel === "browser" ? "工作台浏览器" : "官方"} ·{" "}
+                    {c.label} ，{" "}
+                    {c.channel === "browser" ? "工作台浏览器" : "官方"} ，{" "}
                     {statusLabel(c.status ?? c.state)}
                   </option>
                 ))}
@@ -877,7 +877,7 @@ export function CaptureDialog({
             </select>
           </Field>
           <Field
-            label="成员 ID · 可选"
+            label="成员 ID，可选"
             hint="仅筛选其在当前星球中的发布、回答和评论。"
           >
             <input

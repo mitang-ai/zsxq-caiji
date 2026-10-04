@@ -1,18 +1,21 @@
 import { Link } from "react-router-dom";
 import { brand } from "../../../shared/brand";
-import { BrandLockup, BrandMark } from "../Brand";
+import { BrandMark } from "../Brand";
+import { AppearanceSelect, type AppearanceProps } from "../Appearance";
 
-function PublicHeader() {
+function PublicHeader(props: AppearanceProps) {
   return (
     <header className="public-header">
-      <Link className="brand" to="/welcome" aria-label="集见首页">
-        <BrandLockup />
+      <Link className="public-brand" to="/welcome" aria-label="集见首页">
+        <BrandMark size={26} />
+        <strong>集见</strong>
       </Link>
       <nav aria-label="网站导航">
         <Link to="/plugins">本地插件</Link>
-        <a href={brand.repository}>GitHub ↗</a>
+        <a href={brand.repository}>GitHub</a>
+        <AppearanceSelect {...props} />
         <Link className="button" to="/login">
-          打开工作台
+          工作台
         </Link>
       </nav>
     </header>
@@ -21,213 +24,246 @@ function PublicHeader() {
 function PublicFooter() {
   return (
     <footer className="public-footer">
-      <span>集内容，见门道。</span>
-      <span>集见 {brand.version} · 独立工具，非知识星球官方产品</span>
-      <a href={`${brand.repository}/blob/main/LICENSE`}>MIT 开源 ↗</a>
+      <span>集见 {brand.version}</span>
+      <span>独立工具，非知识星球官方产品</span>
+      <a href={`${brand.repository}/blob/main/LICENSE`}>MIT 开源</a>
     </footer>
   );
 }
-export function LandingPage() {
+export function LandingPage(props: AppearanceProps) {
   return (
     <div className="public-shell">
-      <PublicHeader />
-      <main id="main-content" className="public-main">
-        <section className="landing-hero">
-          <div className="hero-copy">
-            <p className="public-kicker">知识星球采集与整理工作台</p>
-            <h1>
-              好内容，
-              <br />
-              别只收藏。
-            </h1>
-            <p className="hero-description">
-              {brand.description}
-              <br />
-              留下原文，也留下自己的见解。
+      <a className="skip-link" href="#main-content">
+        跳到内容
+      </a>
+      <PublicHeader {...props} />
+      <div className="public-layout">
+        <aside className="public-index" aria-label="使用指南">
+          <p>使用指南</p>
+          <a href="#collect">采集与阅读</a>
+          <a href="#process">加工与成果</a>
+          <a href="#local">本地插件</a>
+          <a href="#boundaries">权限与数据</a>
+        </aside>
+        <main id="main-content" className="public-main">
+          <section className="public-intro">
+            <p className="intro-label">知识星球工作台</p>
+            <h1>把讨论整理成自己的资料</h1>
+            <p>
+              选择你加入的星球，或当前星球的一位成员。保留原文与附件，整理专题，再按需要生成带引用的草稿。
             </p>
-            <div className="hero-actions">
+            <div className="intro-actions">
               <Link className="button primary" to="/login">
-                打开工作台 <span aria-hidden="true">↗</span>
+                打开工作台
               </Link>
               <Link className="button" to="/plugins">
                 安装本地插件
               </Link>
             </div>
-            <p className="hero-note">
-              Chrome / Edge · 插件独立使用 · 模型 API 自配
+            <p className="intro-note">
+              插件无需工作台账号。阅读和导出不要求配置模型。
             </p>
-          </div>
-          <div className="hero-mark">
-            <BrandMark size={310} animated />
-            <span>一页好内容，接住再读。</span>
-          </div>
-        </section>
-        <ol className="landing-flow" aria-label="工作流程">
-          <li>
-            <span>01</span>
-            <strong>收进来</strong>
-            <p>选星球、成员和时间范围，保留原文与来源。</p>
-          </li>
-          <li>
-            <span>02</span>
-            <strong>读明白</strong>
-            <p>阅读、批注、选材。让模型带着引用，帮你理清讨论。</p>
-          </li>
-          <li>
-            <span>03</span>
-            <strong>用起来</strong>
-            <p>自己改稿，整理专题，或把资料和成果导到本地。</p>
-          </li>
-        </ol>
-        <section className="landing-scenes" aria-labelledby="scenes-title">
-          <div className="section-intro">
-            <p className="public-kicker">从一件具体的事开始</p>
-            <h2 id="scenes-title">
-              不是多存一点，
-              <br />
-              是多用一点。
-            </h2>
-          </div>
-          <div className="scene-list">
-            <article>
-              <span>成员研究</span>
-              <h3>一个人，在这个星球里说过什么？</h3>
-              <p>
-                按作者 ID
-                固定范围。把观点、案例和讨论放在一起读，不把其他星球的内容混进来。
-              </p>
-            </article>
-            <article>
-              <span>专题整理</span>
-              <h3>零散的讨论，拼成一份能回查的资料。</h3>
-              <p>先选原文，再看计划与预算。模型出草稿，你保留最后的修改权。</p>
-            </article>
-            <article>
-              <span>本地带走</span>
-              <h3>不想放在云端？就在自己的浏览器里做。</h3>
-              <p>
-                插件无需工作台账号。阅读与导出不需要模型；同步到 Web
-                必须由你确认。
-              </p>
-            </article>
-          </div>
-        </section>
-        <section className="landing-boundaries">
-          <h2>用之前，把边界说清楚。</h2>
-          <div>
+          </section>
+          <section id="collect" className="public-section">
+            <h2>采集与阅读</h2>
+            <dl className="feature-rows">
+              <div>
+                <dt>按范围采集</dt>
+                <dd>
+                  固定星球、作者 ID、时间与内容类型。成员采集始终限于当前星球。
+                </dd>
+              </div>
+              <div>
+                <dt>留下原文</dt>
+                <dd>
+                  正文、讨论和附件分别记录覆盖情况。缺页与中断有说明，不冒充完整归档。
+                </dd>
+              </div>
+              <div>
+                <dt>继续整理</dt>
+                <dd>
+                  搜索、标签、收藏、批注和专题选材。原文更新后，旧稿引用仍固定到当时版本。
+                </dd>
+              </div>
+            </dl>
+          </section>
+          <section id="process" className="public-section">
+            <h2>加工与成果</h2>
             <p>
-              <strong>采集在你的权限内。</strong> 官方 MCP
-              和网页登录都保留。网页登录不要求球主开启
-              MCP，但不能读取账号不可见的内容。
+              模型帮你读材料，不替你决定哪些内容外发。执行前先看选材、模型服务和调用预算，再确认加工。
+            </p>
+            <div className="process-line">
+              <span>选择材料</span>
+              <span>核对计划</span>
+              <span>确认加工</span>
+              <span>编辑草稿</span>
+            </div>
+            <p>
+              人工稿保存编辑历史。重新加工生成新提案，不直接覆盖你的修改。成果可以导出为
+              Markdown 或带原件的材料包。
+            </p>
+          </section>
+          <section id="local" className="public-section">
+            <h2>本地插件</h2>
+            <p>
+              Chrome 和 Edge
+              使用同一套功能。资料保存在当前浏览器，也能配置自己的模型
+              API，独立整理与导出。
+            </p>
+            <dl className="feature-rows">
+              <div>
+                <dt>本地使用</dt>
+                <dd>用自己已登录的知识星球网页读取内容，不导出 Cookie。</dd>
+              </div>
+              <div>
+                <dt>可选同步</dt>
+                <dd>配对工作台后，预览并确认选定材料。历史不会自动上传。</dd>
+              </div>
+            </dl>
+            <Link className="text-link" to="/plugins">
+              下载插件与安装说明
+            </Link>
+          </section>
+          <section id="boundaries" className="public-section">
+            <h2>权限与数据</h2>
+            <p>
+              官方
+              MCP、独立网页登录和本地插件均只处理当前账号可访问的内容。网页登录不要求球主开启
+              MCP。
             </p>
             <p>
-              <strong>原文不是“全部成功”的保证。</strong>{" "}
-              缺页、附件失败与中断会留下覆盖说明，方便核对和恢复。
+              模型 API
+              需要自己配置，可能计费；所选文本会发送到该服务。团队分享、模型加工与插件同步都保留明确的确认步骤。
             </p>
-            <p>
-              <strong>加工先看计划。</strong> API
-              可能计费，所选文本会发给你配置的模型服务。人工批准不因包装而省略。
+            <p className="intro-note">
+              当前没有 OCR、音视频转写或外部知识系统自动写入。
+              <a
+                className="text-link"
+                href={`${brand.repository}/blob/main/docs/features.md`}
+              >
+                完整功能说明
+              </a>
             </p>
+          </section>
+          <div className="public-account">
+            <Link className="button" to="/register">
+              创建工作台账号
+            </Link>
+            <Link className="text-link" to="/recovery">
+              已有账号需要恢复？
+            </Link>
           </div>
-        </section>
-        <section className="landing-final">
-          <h2>先收一小批，慢慢读。</h2>
-          <Link className="button primary" to="/register">
-            创建工作台账号 ↗
-          </Link>
-          <Link to="/plugins">或直接使用本地插件</Link>
-        </section>
-      </main>
+        </main>
+      </div>
       <PublicFooter />
     </div>
   );
 }
-export function PluginsPage() {
+export function PluginsPage(props: AppearanceProps) {
   const release = `${brand.repository}/releases/download/v${brand.version}`;
   return (
     <div className="public-shell">
-      <PublicHeader />
+      <a className="skip-link" href="#main-content">
+        跳到内容
+      </a>
+      <PublicHeader {...props} />
       <main id="main-content" className="public-main plugins-main">
-        <p className="public-kicker">集见 · 本地版 / {brand.version}</p>
-        <h1>
-          自己的内容，
-          <br />
-          先留在自己这里。
-        </h1>
-        <p className="hero-description">
-          使用你已登录的知识星球。采集、整理和导出独立完成，
-          <br />
-          需要时，再把选定材料同步到工作台。
-        </p>
-        <div className="download-grid">
+        <section className="public-intro">
+          <p className="intro-label">本地版 {brand.version}</p>
+          <h1>安装集见浏览器插件</h1>
+          <p>
+            采集、阅读、整理和导出可以在浏览器里独立完成，不需要工作台账号。模型加工和同步都是可选步骤。
+          </p>
+        </section>
+        <div className="download-table" role="table" aria-label="插件下载">
+          <div className="download-table-head" role="row">
+            <span role="columnheader">浏览器</span>
+            <span role="columnheader">安装要求</span>
+            <span role="columnheader">发行文件</span>
+          </div>
           {(["chrome", "edge"] as const).map((browser) => (
-            <article key={browser}>
-              <BrandMark size={48} />
-              <h2>{browser === "chrome" ? "Chrome" : "Microsoft Edge"}</h2>
-              <p>
-                适用于桌面浏览器
-                120+。当前通过开发者模式安装，尚未上架扩展商店。
-              </p>
-              <a
-                className="button primary"
-                href={`${release}/jijian-${browser}-v${brand.version}.zip`}
-              >
-                下载 {browser === "chrome" ? "Chrome" : "Edge"} 插件 ↓
-              </a>
-            </article>
+            <div className="download-table-row" role="row" key={browser}>
+              <strong role="cell">
+                {browser === "chrome" ? "Chrome" : "Microsoft Edge"}
+              </strong>
+              <span role="cell">桌面版 120 或更高</span>
+              <span role="cell">
+                <a
+                  className="button"
+                  href={`${release}/jijian-${browser}-v${brand.version}.zip`}
+                >
+                  下载 {browser === "chrome" ? "Chrome" : "Edge"} 插件
+                </a>
+              </span>
+            </div>
           ))}
         </div>
-        <section className="install-section">
-          <h2>三步装好，不需要 Node。</h2>
+        <p className="intro-note">目前通过开发者模式安装，尚未上架扩展商店。</p>
+        <section className="public-section install-section">
+          <h2>安装步骤</h2>
           <ol>
             <li>
-              <strong>下载并解压。</strong>{" "}
-              保留整个文件夹，更新时在原文件夹覆盖文件，不删除本地数据库。
+              <strong>下载并解压。</strong> 保存到固定目录，确认目录内有{" "}
+              <code>manifest.json</code>。
             </li>
             <li>
-              <strong>打开扩展管理。</strong> Chrome 打开{" "}
-              <code>chrome://extensions</code>，Edge 打开{" "}
-              <code>edge://extensions</code>。启用「开发者模式」。
+              <strong>打开扩展管理。</strong> Chrome 输入{" "}
+              <code>chrome://extensions</code>，Edge 输入{" "}
+              <code>edge://extensions</code>，开启「开发者模式」。
             </li>
             <li>
-              <strong>加载已解压的扩展。</strong> 选择含{" "}
-              <code>manifest.json</code>{" "}
-              的文件夹。固定图标，点击打开侧栏；也可用 <kbd>Alt</kbd> +{" "}
-              <kbd>Shift</kbd> + <kbd>J</kbd>。
+              <strong>加载扩展。</strong>{" "}
+              点击「加载已解压的扩展」并选择该目录。固定工具栏图标后，点击打开侧栏。
             </li>
           </ol>
           <p>
-            首次使用先打开知识星球并登录，再按提示授权当前来源。模型配置可跳过。
+            也可使用 <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd>
+            。完整扩展页面用于阅读、选材、加工和导出。
+          </p>
+        </section>
+        <section className="public-section">
+          <h2>首次使用与更新</h2>
+          <p>
+            先打开知识星球并登录，再按提示授权来源，选一小批范围采集。模型设置可以稍后再配。
           </p>
           <p>
-            更新前先在插件「导出与备份」保存一份备份。卸载扩展或清除浏览器数据可能删除本地资料；跨浏览器迁移请使用备份恢复。
+            更新前先导出本机备份，再在原目录覆盖发行文件并重新加载扩展，不先卸载。跨浏览器迁移使用备份恢复；清除浏览器数据可能删除本地资料。
           </p>
-          <a href={`${brand.repository}/blob/main/docs/plugin-install.md`}>
-            查看更新、恢复与排错说明 ↗
+          <a
+            className="text-link"
+            href={`${brand.repository}/blob/main/docs/plugin-install.md`}
+          >
+            安装、更新与恢复说明
           </a>
         </section>
-        <section className="landing-boundaries">
-          <h2>哪些会离开本机？</h2>
-          <div>
-            <p>
-              <strong>读取来源：</strong> 请求知识星球，需要你授权来源域名。
-            </p>
-            <p>
-              <strong>模型加工：</strong> 选定文本发送到你授权的 API，可能计费。
-            </p>
-            <p>
-              <strong>同步工作台：</strong>{" "}
-              先配对，再预览与确认材料。历史不会自动上传。
-            </p>
-          </div>
+        <section className="public-section">
+          <h2>哪些数据会离开本机</h2>
+          <dl className="feature-rows">
+            <div>
+              <dt>读取来源</dt>
+              <dd>请求你授权的知识星球域名。</dd>
+            </div>
+            <div>
+              <dt>模型加工</dt>
+              <dd>将所选文本发送到你配置的 API，可能计费。</dd>
+            </div>
+            <div>
+              <dt>同步工作台</dt>
+              <dd>配对后，只有预览并确认的材料才会上传。</dd>
+            </div>
+          </dl>
         </section>
-        <p className="download-meta">
-          <a href={`${release}/SHA256SUMS`}>下载 SHA-256 校验值</a> ·{" "}
-          <a href={`${brand.repository}/releases/tag/v${brand.version}`}>
+        <div className="download-meta">
+          <a className="text-link" href={`${release}/SHA256SUMS`}>
+            SHA-256 校验值
+          </a>
+          <a
+            className="text-link"
+            href={`${brand.repository}/releases/tag/v${brand.version}`}
+          >
             发行说明
-          </a>{" "}
-          · 两个浏览器同一代码与数据契约，分别发布
-        </p>
+          </a>
+        </div>
       </main>
       <PublicFooter />
     </div>

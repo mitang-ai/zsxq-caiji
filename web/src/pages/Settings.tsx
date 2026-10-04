@@ -66,7 +66,7 @@ export function ConnectionsPage() {
   return (
     <>
       <PageHeader
-        eyebrow="个人连接 · 不随团队分享"
+        eyebrow="个人连接，不随团队分享"
         title="来源与连接"
         description="网页登录与官方通道独立。选择可用通道，不把授权失败当成空内容。"
         actions={
@@ -167,7 +167,7 @@ export function ConnectionsPage() {
         )}
       </LoadState>
       <Notice>
-        本机 Chrome / Edge
+        本机 Chrome 和 Edge
         插件可独立登录、处理与导出。配对工作台只授予明确空间的业务能力，源站
         Cookie 不会上传。<Link to="/settings/devices">管理插件设备</Link>
       </Notice>
@@ -380,7 +380,7 @@ function HostedBrowser({
   }
   return (
     <Dialog
-      title={`登录浏览器 · ${connection.label}`}
+      title={`登录浏览器，${connection.label}`}
       description="这是隔离的工作台浏览器画面，不是知识星球 iframe。点击画面操作，登录后核验来源身份。"
       onClose={onClose}
       wide
@@ -507,7 +507,7 @@ function HostedBrowser({
         )}
         {identity && (
           <Notice tone="success">
-            核验完成：{identity.source_account_name || "来源账号"} · ID{" "}
+            核验完成：{identity.source_account_name || "来源账号"}，ID{" "}
             {identity.source_account_id || "未提供"}。
             <Badge value={identity.state} />
           </Notice>
@@ -536,7 +536,7 @@ export function SettingsPage() {
     <>
       <PageHeader
         title="设置"
-        description={`${session.user.name} · 个人连接与凭据独立，材料权限随当前空间。`}
+        description={`${session.user.name}，个人连接与凭据独立，材料权限随当前空间。`}
       />
       <nav className="settings-tabs" aria-label="设置分类">
         {settingTabs.map(([path, label]) => (
@@ -573,10 +573,8 @@ function AppearanceSettings() {
         <div className="theme-grid">
           {[
             ["system", "跟随系统"],
-            ["paper", "纸白"],
-            ["warm", "暖灰"],
-            ["graphite", "石墨"],
-            ["mist", "雾蓝"],
+            ["paper", "浅色"],
+            ["graphite", "深色"],
           ].map(([id, label]) => (
             <button
               key={id}
@@ -623,11 +621,11 @@ function AppearanceSettings() {
                 })
               }
             >
-              <option value="comfortable">舒适 · 72px 起</option>
-              <option value="compact">紧凑 · 48px 起</option>
+              <option value="comfortable">舒适，72px 起</option>
+              <option value="compact">紧凑，48px 起</option>
             </select>
           </Field>
-          <Field label={`阅读字号 · ${preferences.reader}px`}>
+          <Field label={`阅读字号，${preferences.reader}px`}>
             <input
               type="range"
               min={16}
@@ -749,7 +747,7 @@ function TeamSettings() {
     <div className="settings-stack">
       <section className="settings-section">
         <h2>
-          {workspace.kind === "team" ? "团队空间" : "个人私有空间"} ·{" "}
+          {workspace.kind === "team" ? "团队空间" : "个人私有空间"} ，{" "}
           {workspace.name}
         </h2>
         <p className="muted">
@@ -877,7 +875,7 @@ function TeamSettings() {
                       )?.name || s.target_workspace_id}
                     </strong>
                     <span className="muted">
-                      {date(s.created_at)} · {s.revoked_at ? "已撤销" : "有效"}
+                      {date(s.created_at)}，{s.revoked_at ? "已撤销" : "有效"}
                     </span>
                   </div>
                   <Button onClick={() => setReceipt(s)}>查看回执</Button>
@@ -972,7 +970,7 @@ function DeviceSettings() {
   return (
     <div className="settings-stack">
       <section className="settings-section">
-        <h2>配对 Chrome / Edge 插件</h2>
+        <h2>配对 Chrome 和 Edge 插件</h2>
         <p className="muted">
           插件无需工作台账号即可独立使用。配对只为明确发送至工作台，不会同步源站登录态与模型
           Key。
@@ -1040,7 +1038,7 @@ function DeviceSettings() {
                 <div className="grow">
                   <strong>{d.label}</strong>
                   <span className="muted">
-                    空间 {d.workspace_id} · 最近使用 {date(d.last_seen_at)}
+                    空间 {d.workspace_id}，最近使用 {date(d.last_seen_at)}
                   </span>
                 </div>
                 {d.revoked_at ? (
@@ -1093,7 +1091,7 @@ function AgentSettings() {
       <section className="settings-section">
         <h2>有限的业务工具，不开放浏览器控制</h2>
         <p className="muted">
-          外部 MCP / 本地 Agent 只能读取、创建限定加工任务或导出业务材料，不能拿
+          外部 MCP 和本地 Agent 只能读取、创建限定加工任务或导出业务材料，不能拿
           Cookie、Key、源站浏览器或任意网络代理。
         </p>
         <Notice>
@@ -1145,7 +1143,7 @@ function AgentSettings() {
               <div className="grow">
                 <strong>{t.label}</strong>
                 <span className="muted">
-                  {t.scopes?.join(" · ")} · 到期 {date(t.expires_at)}
+                  {t.scopes?.join("，")}，到期 {date(t.expires_at)}
                 </span>
               </div>
               {t.revoked_at ? (
@@ -1173,7 +1171,7 @@ function AgentSettings() {
               <input type="password" readOnly value={created.token || ""} />
             </Field>
             <p>
-              空间：{workspace.name} · 能力：{created.scopes?.join("、")}
+              空间：{workspace.name}，能力：{created.scopes?.join("、")}
             </p>
             <Button
               onClick={() =>
@@ -1362,7 +1360,7 @@ function DataSettings() {
           }}
         >
           <p>
-            {materials.data?.length || 0} 条材料 · {artifacts.data?.length || 0}{" "}
+            {materials.data?.length || 0} 条材料，{artifacts.data?.length || 0}{" "}
             份成果
           </p>
           <div className="toolbar">

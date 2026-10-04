@@ -7,7 +7,7 @@ import { brand, markPaths } from "../shared/brand.js";
 const { createCanvas, loadImage } = createRequire(import.meta.url)(
   "@napi-rs/canvas",
 );
-const shapes = (color = "#18181b") =>
+const shapes = (color = "#181818") =>
   `<g fill="${color}"><path id="page" d="${markPaths.page}"/><path id="cradle" d="${markPaths.cradle}"/></g>`;
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><title>集见：一页被接住</title>${shapes()}</svg>`;
 for (const dir of ["docs/assets/brand", "web/src/assets", "extension/icons"])
@@ -20,11 +20,7 @@ for (const file of [
   writeFileSync(file, svg + "\n");
 writeFileSync(
   "docs/assets/brand/mark-white.svg",
-  svg.replace('fill="#18181b"', 'fill="#faf8f4"') + "\n",
-);
-writeFileSync(
-  "docs/assets/brand/mark-orange.svg",
-  svg.replace('<path id="page"', '<path fill="#c45b3c" id="page"') + "\n",
+  svg.replace('fill="#181818"', 'fill="#ffffff"') + "\n",
 );
 const image = await loadImage(
   Buffer.from(svg.replace("viewBox", 'width="1000" height="1000" viewBox')),
@@ -41,25 +37,24 @@ for (const size of [16, 32, 48, 128]) {
 // The social card is code-rendered typography with a system font, not a mockup.
 const social = createCanvas(1200, 630),
   ctx = social.getContext("2d");
-ctx.fillStyle = "#faf8f4";
+ctx.fillStyle = "#ffffff";
 ctx.fillRect(0, 0, 1200, 630);
-ctx.drawImage(image, 800, 150, 300, 300);
-ctx.fillStyle = "#18181b";
-ctx.font = 'bold 38px "Microsoft YaHei"';
-ctx.fillText(`${brand.name}  ·  ${brand.latin}`, 70, 100);
-ctx.font = 'bold 66px "Microsoft YaHei"';
-ctx.fillText("好内容，", 70, 255);
-ctx.fillText("别只收藏。", 70, 350);
-ctx.fillStyle = "#65635f";
+ctx.drawImage(image, 920, 210, 180, 180);
+ctx.fillStyle = "#181818";
+ctx.font = '600 30px "Microsoft YaHei"';
+ctx.fillText(brand.name, 70, 100);
+ctx.font = '600 40px "Microsoft YaHei"';
+ctx.fillText("把讨论整理成自己的资料", 70, 280);
+ctx.fillStyle = "#666666";
 ctx.font = '25px "Microsoft YaHei"';
-ctx.fillText(brand.description, 70, 440);
-ctx.strokeStyle = "#dedbd5";
+ctx.fillText(brand.description, 70, 340);
+ctx.strokeStyle = "#e5e5e5";
 ctx.beginPath();
 ctx.moveTo(70, 520);
 ctx.lineTo(1130, 520);
 ctx.stroke();
 ctx.font = '21px "Microsoft YaHei"';
-ctx.fillText("知识星球  /  Chrome & Edge  /  本地采集与受控加工", 70, 566);
+ctx.fillText("知识星球工作台    Chrome 和 Edge 本地插件", 70, 566);
 writeFileSync("web/src/assets/social-card.png", social.toBuffer("image/png"));
 writeFileSync(
   "docs/assets/brand/social-card.png",

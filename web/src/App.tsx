@@ -24,6 +24,8 @@ import {
   useApi,
   useOperation,
 } from "./api";
+import { normalizeAppearance } from "../../shared/appearance";
+import { AppearanceSelect, type AppearanceProps } from "./Appearance";
 import { LandingPage, PluginsPage } from "./pages/Public";
 import { MaterialsPage, ReaderPage } from "./pages/Materials";
 import { clearMaterialListStates } from "./listState";
@@ -67,7 +69,16 @@ export function App() {
     [checking, setChecking] = useState(true),
     [checkError, setCheckError] = useState("");
   const [workspaceId, setWorkspaceId] = useState("");
-  const [preferences, setPreferencesState] = useState<Preferences>(defaults);
+  const [preferences, setPreferencesState] = useState<Preferences>(() => {
+    try {
+      return {
+        ...defaults,
+        theme: normalizeAppearance(localStorage.getItem("xingjian.appearance")),
+      };
+    } catch {
+      return defaults;
+    }
+  });
   const [toast, setToast] = useState("");
   const [search, setSearch] = useState(false),
     [menu, setMenu] = useState(false);
@@ -148,6 +159,7 @@ export function App() {
         setPreferencesState({
           ...defaults,
           ...p,
+          theme: normalizeAppearance(p.theme),
           reader: Math.max(16, Math.min(22, Number(p.reader) || 17)),
         });
     } catch {
@@ -175,6 +187,12 @@ export function App() {
         );
       } catch {
         setToast("外观已应用，本机偏好存储不可用，重新打开后不会保留。");
+      }
+    if (!session)
+      try {
+        localStorage.setItem("xingjian.appearance", p.theme);
+      } catch {
+        setToast("外观已应用，本机偏好存储不可用。");
       }
   };
   useEffect(() => {
@@ -231,15 +249,38 @@ export function App() {
     );
     setPendingInvite("");
   }
-  if (location.pathname === "/plugins") return <PluginsPage />;
+  if (location.pathname === "/plugins")
+    return (
+      <PluginsPage
+        appearance={normalizeAppearance(preferences.theme)}
+        onAppearanceChange={(theme) =>
+          setPreferences({ ...preferences, theme })
+        }
+      />
+    );
   if (
     location.pathname === "/welcome" ||
     (!session && !checking && !checkError && location.pathname === "/")
   )
-    return <LandingPage />;
+    return (
+      <LandingPage
+        appearance={normalizeAppearance(preferences.theme)}
+        onAppearanceChange={(theme) =>
+          setPreferences({ ...preferences, theme })
+        }
+      />
+    );
   if (checking)
     return (
       <div className="auth-shell">
+        <div className="auth-appearance">
+          <AppearanceSelect
+            appearance={normalizeAppearance(preferences.theme)}
+            onAppearanceChange={(theme) =>
+              setPreferences({ ...preferences, theme })
+            }
+          />
+        </div>
         <div className="brand">
           <Icon name="mark" size={26} />
           <strong>集见</strong>
@@ -253,6 +294,14 @@ export function App() {
   if (checkError)
     return (
       <div className="auth-shell">
+        <div className="auth-appearance">
+          <AppearanceSelect
+            appearance={normalizeAppearance(preferences.theme)}
+            onAppearanceChange={(theme) =>
+              setPreferences({ ...preferences, theme })
+            }
+          />
+        </div>
         <Notice
           tone="error"
           action={<Button onClick={() => void check()}>重新连接</Button>}
@@ -272,15 +321,42 @@ export function App() {
         <Routes>
           <Route
             path="/register"
-            element={<AuthPage mode="register" onSuccess={signedIn} />}
+            element={
+              <AuthPage
+                mode="register"
+                onSuccess={signedIn}
+                appearance={normalizeAppearance(preferences.theme)}
+                onAppearanceChange={(theme) =>
+                  setPreferences({ ...preferences, theme })
+                }
+              />
+            }
           />
           <Route
             path="/recovery"
-            element={<AuthPage mode="recovery" onSuccess={signedIn} />}
+            element={
+              <AuthPage
+                mode="recovery"
+                onSuccess={signedIn}
+                appearance={normalizeAppearance(preferences.theme)}
+                onAppearanceChange={(theme) =>
+                  setPreferences({ ...preferences, theme })
+                }
+              />
+            }
           />
           <Route
             path="*"
-            element={<AuthPage mode="login" onSuccess={signedIn} />}
+            element={
+              <AuthPage
+                mode="login"
+                onSuccess={signedIn}
+                appearance={normalizeAppearance(preferences.theme)}
+                onAppearanceChange={(theme) =>
+                  setPreferences({ ...preferences, theme })
+                }
+              />
+            }
           />
         </Routes>
       </>
@@ -291,6 +367,14 @@ export function App() {
   if (!workspace)
     return (
       <div className="auth-shell">
+        <div className="auth-appearance">
+          <AppearanceSelect
+            appearance={normalizeAppearance(preferences.theme)}
+            onAppearanceChange={(theme) =>
+              setPreferences({ ...preferences, theme })
+            }
+          />
+        </div>
         <Notice
           tone="error"
           action={<Button onClick={() => void check()}>重新检查</Button>}
@@ -377,7 +461,7 @@ export function App() {
                   : workspace.kind === "team"
                     ? "团队共享"
                     : "当前空间"}{" "}
-              ·{" "}
+              ，{" "}
               {(
                 {
                   owner: "拥有者",
@@ -391,7 +475,7 @@ export function App() {
           <Button className="search-button" onClick={() => setSearch(true)}>
             <Icon name="search" />
             <span>搜索资料</span>
-            <kbd>⌘ / Ctrl K</kbd>
+            <kbd>{navigator.platform.includes("Mac") ? "⌘ K" : "Ctrl K"}</kbd>
           </Button>
           <nav aria-label="主要导航">
             {navigation.map(([path, label, icon]) => (
@@ -462,14 +546,17 @@ export function App() {
                   </option>
                 ))}
               </select>
-              <span className="breadcrumb-divider">/</span>
+
               <span>{currentTitle}</span>
             </div>
             <div className="topbar-trailing">
-              <span className="execution-label">
-                <span className="status-dot" />
-                独立工作台
-              </span>
+              <AppearanceSelect
+                appearance={normalizeAppearance(preferences.theme)}
+                onAppearanceChange={(theme) =>
+                  setPreferences({ ...preferences, theme })
+                }
+              />
+              <span className="execution-label">独立工作台</span>
               <Link to="/settings/team" className="quiet-link">
                 分享与团队
               </Link>
@@ -547,7 +634,8 @@ export function App() {
 function AuthPage({
   mode,
   onSuccess,
-}: {
+  ...appearanceProps
+}: AppearanceProps & {
   mode: "login" | "register" | "recovery";
   onSuccess: (s: Session) => void;
 }) {
@@ -598,6 +686,9 @@ function AuthPage({
         : "回到你的知识工作台";
   return (
     <div className="auth-shell">
+      <div className="auth-appearance">
+        <AppearanceSelect {...appearanceProps} />
+      </div>
       <Link className="brand" to="/welcome">
         <Icon name="mark" size={28} />
         <strong>集见</strong>
@@ -762,7 +853,7 @@ function SearchDialog({ onClose }: { onClose: () => void }) {
                   <div>
                     <strong>{m.title || "无标题材料"}</strong>
                     <span className="muted">
-                      {m.author_name ?? "作者未提供"} · {date(m.created_at)}
+                      {m.author_name ?? "作者未提供"}，{date(m.created_at)}
                     </span>
                   </div>
                   <Badge value={m.status} />

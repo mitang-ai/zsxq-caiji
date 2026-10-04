@@ -62,7 +62,7 @@ export function TaskExport({
           JSON 不包含附件原件；需要原件请在资料库明确选材后导出 ZIP。
         </Notice>
         <div className="form-grid">
-          <Field label="起始回执偏移 · 从 0 计">
+          <Field label="起始回执偏移，从 0 计">
             <input
               type="number"
               disabled={op.busy}
@@ -77,7 +77,7 @@ export function TaskExport({
             />
           </Field>
           <Field
-            label="每批回执条数 · 1–1000"
+            label="每批回执条数，1–1000"
             hint="超过包体上限时降低本批条数重试，不自动扩大范围。"
           >
             <input
@@ -109,7 +109,7 @@ export function TaskExport({
                 </dd>
               </div>
               <div>
-                <dt>本批偏移 / 上限</dt>
+                <dt>本批偏移与上限</dt>
                 <dd>
                   {String(receipt.coverage.offset ?? offset)} /{" "}
                   {String(receipt.coverage.limit ?? limit)}
@@ -118,7 +118,7 @@ export function TaskExport({
               <div>
                 <dt>包内内容</dt>
                 <dd>
-                  {receipt.records.length} 个原文快照 ·{" "}
+                  {receipt.records.length} 个原文快照 ，{" "}
                   {receipt.artifacts.length} 份成果
                 </dd>
               </div>
@@ -144,7 +144,7 @@ export function TaskExport({
                   op.clear();
                 }}
               >
-                准备下一批 · 偏移 {next}
+                准备下一批，偏移 {next}
               </Button>
             ) : (
               <p className="muted">

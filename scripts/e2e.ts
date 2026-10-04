@@ -225,10 +225,8 @@ try {
   report.screens.push("web-artifact.png");
   await page.goto(url + "/settings/appearance");
   for (const [theme, label] of [
-    ["paper", "纸白"],
-    ["warm", "暖灰"],
-    ["graphite", "石墨"],
-    ["mist", "雾蓝"],
+    ["paper", "浅色"],
+    ["graphite", "深色"],
   ]) {
     await page.getByRole("button", { name: label, exact: true }).click();
     assert.equal(await page.locator("html").getAttribute("data-theme"), theme);
@@ -239,10 +237,15 @@ try {
   }
   await page.reload();
   await page.waitForFunction(
-    () => document.documentElement.dataset.theme === "mist",
+    () => document.documentElement.dataset.theme === "graphite",
   );
-  assert.equal(await page.locator("html").getAttribute("data-theme"), "mist");
-  report.checks.push("four theme switches + reload preference persistence");
+  assert.equal(
+    await page.locator("html").getAttribute("data-theme"),
+    "graphite",
+  );
+  report.checks.push(
+    "neutral light/dark switches + reload preference persistence",
+  );
   for (const path of [
     "/inbox",
     "/library",

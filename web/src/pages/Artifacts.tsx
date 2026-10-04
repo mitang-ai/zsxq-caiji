@@ -67,7 +67,7 @@ export function ArtifactsPage() {
                   <h2>{a.title || "未命名成果"}</h2>
                   <p>{a.body?.slice(0, 150) || "尚无正文"}</p>
                   <span className="muted">
-                    {a.citations?.length ?? 0} 条引用 ·{" "}
+                    {a.citations?.length ?? 0} 条引用 ，{" "}
                     {date(a.updated_at ?? a.created_at)}
                   </span>
                 </div>
@@ -275,7 +275,7 @@ export function ArtifactPage() {
     await op.run(async () => {
       const copy = await api<Artifact>(endpoint(wid, "/artifacts"), {
         method: "POST",
-        body: { title: `${title} · 保留副本`, body, citations },
+        body: { title: `${title}，保留副本`, body, citations },
       });
       sessionStorage.removeItem(draftKey);
       notify("冲突稿已另存，不覆盖其他修改。");
@@ -322,7 +322,7 @@ export function ArtifactPage() {
                 {busy
                   ? "正在保存…"
                   : dirty
-                    ? "有未保存修改 · 浏览器草稿已保留"
+                    ? "有未保存修改，浏览器草稿已保留"
                     : savedAt
                       ? `已保存 ${date(savedAt)}`
                       : "服务端版本已载入"}
@@ -331,7 +331,7 @@ export function ArtifactPage() {
                 onClick={() => {
                   download(
                     `${title || "成果"}.md`,
-                    `# ${historical ? (history?.title ?? title) : title}\n\n${shownBody}\n\n## 来源引用\n${shownCitations.map((c, i) => `${i + 1}. 材料 ${c.material_id} · 快照 ${c.revision_id}${c.quote ? `\n   > ${c.quote}` : ""}`).join("\n")}`,
+                    `# ${historical ? (history?.title ?? title) : title}\n\n${shownBody}\n\n## 来源引用\n${shownCitations.map((c, i) => `${i + 1}. 材料 ${c.material_id}，快照 ${c.revision_id}${c.quote ? `\n   > ${c.quote}` : ""}`).join("\n")}`,
                     "text/markdown;charset=utf-8",
                   );
                 }}
@@ -456,7 +456,7 @@ export function ArtifactPage() {
                     <option value="">当前可编辑版本</option>
                     {a.revisions?.map((r, i) => (
                       <option key={r.id} value={r.id}>
-                        版本 {i + 1} · {date(r.created_at ?? r.captured_at)}
+                        版本 {i + 1}，{date(r.created_at ?? r.captured_at)}
                       </option>
                     ))}
                   </select>
@@ -594,7 +594,7 @@ export function ArtifactPage() {
                     <option value="">选择历史版本</option>
                     {a.revisions?.map((r, i) => (
                       <option key={r.id} value={r.id}>
-                        版本 {i + 1} · {date(r.created_at)}
+                        版本 {i + 1}，{date(r.created_at)}
                       </option>
                     ))}
                   </select>
@@ -602,7 +602,7 @@ export function ArtifactPage() {
                 <div className="version-compare">
                   <section>
                     <h3>
-                      历史 ·{" "}
+                      历史 ，{" "}
                       {a.revisions?.find((r) => r.id === compareId)?.title ||
                         "未选择"}
                     </h3>
@@ -612,7 +612,7 @@ export function ArtifactPage() {
                     </div>
                   </section>
                   <section>
-                    <h3>当前已保存 · {a.title}</h3>
+                    <h3>当前已保存，{a.title}</h3>
                     <div className="prewrap">{a.body}</div>
                   </section>
                 </div>
@@ -649,7 +649,7 @@ export function ArtifactPage() {
                   </select>
                 </Field>
                 <Field
-                  label="原文引句 · 可选"
+                  label="原文引句，可选"
                   hint="保存时读取完整原文验证，不以列表摘要为证据；不填写则固定引用整个版本。"
                 >
                   <textarea
@@ -746,7 +746,7 @@ function ProposalPanel({
               <div className="row-meta">
                 <Badge value={p.status || "pending"} />
                 <span>
-                  {date(p.created_at)} · 前稿{" "}
+                  {date(p.created_at)}，前稿{" "}
                   {p.base_revision_number ?? p.base_revision}
                 </span>
                 {p.conflict && <Badge value="partial">前稿已变化</Badge>}
@@ -800,13 +800,13 @@ function ProposalPanel({
         >
           <div className="version-compare">
             <section>
-              <h3>固定前稿 · {selected.base_title || artifact.title}</h3>
+              <h3>固定前稿，{selected.base_title || artifact.title}</h3>
               <div className="prewrap">
                 {selected.base_body ?? "前稿正文未提供"}
               </div>
             </section>
             <section>
-              <h3>新提案 · {selected.title}</h3>
+              <h3>新提案，{selected.title}</h3>
               <MarkdownPreview text={selected.body} />
               <p className="muted">{selected.citations.length} 条固定引用</p>
             </section>

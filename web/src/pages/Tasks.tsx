@@ -131,8 +131,8 @@ export function TasksPage() {
                 <div>
                   <Badge value={state} />
                   <p className="muted">
-                    {job.id} ·{" "}
-                    {job.kind === "capture" ? "读取源站" : "模型加工"} ·
+                    {job.id} ，{" "}
+                    {job.kind === "capture" ? "读取源站" : "模型加工"} ，
                     工作台服务端
                   </p>
                 </div>
@@ -335,7 +335,7 @@ export function TasksPage() {
                   <h3>输入与断点</h3>
                   {failures.length > 0 && (
                     <section className="capture-failures">
-                      <h3>已知失败项 · {failures.length}</h3>
+                      <h3>已知失败项，{failures.length}</h3>
                       <p className="muted small">
                         范围是否完整与这些失败项分别记录。只重试已知主题，不从第一页重新扫描。
                       </p>
@@ -357,7 +357,7 @@ export function TasksPage() {
                                     )[stage] || stage,
                                 )
                                 .join("、") || "阶段未提供"}{" "}
-                              · {date(f.at)}
+                              ，{date(f.at)}
                             </span>
                           </li>
                         ))}
@@ -573,7 +573,7 @@ function ExecutionPlan({ value }: { value: unknown }) {
             <dd>
               {display("title", previous.title)}
               <span className="block muted small">
-                固定版本 {display("revision_id", previous.revision_id)} ·{" "}
+                固定版本 {display("revision_id", previous.revision_id)} ，{" "}
                 {display("input_characters", previous.input_characters)} 字符
               </span>
             </dd>
