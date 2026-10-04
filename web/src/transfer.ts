@@ -90,7 +90,7 @@ export async function createArchive(
   }
   const missing = bundle.attachments.filter((a) => a.status !== "available");
   files["README.txt"] = strToU8(
-    `星笺 TransferBundle v1。包含固定历史原文、批注、成果与引用，成果引用也会携带其证据原文。\n已保存附件原件 ${count} 个，经 SHA-256 和大小校验；缺失或待保存 ${missing.length} 个，见 bundle.json。\n不包含 Cookie、Key、登录态或私有设备身份。\n`,
+    `集见 TransferBundle v1。包含固定历史原文、批注、成果与引用，成果引用也会携带其证据原文。\n已保存附件原件 ${count} 个，经 SHA-256 和大小校验；缺失或待保存 ${missing.length} 个，见 bundle.json。\n不包含 Cookie、Key、登录态或私有设备身份。\n`,
   );
   progress("生成 ZIP…");
   return zipSync(files, { level: 1 });

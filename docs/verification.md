@@ -54,3 +54,9 @@ npm run test:ops
 当前真实星球完整采集、正式材料上的模型加工、原生权限弹窗及所有来源原件/子回复样本仍未完成整体验收。`partial`、不可访问和未知结果均应原样报告，不以自动测试通过替代。
 
 `test:source-anonymous` 会访问外部来源边界，不纳入默认 CI。`test:extension` / `test:extension-sync` 使用隔离扩展宿主和本地 fixture；预授予权限的运输成功不等于用户实际确认弹窗。不要为测试导出私人 Cookie、Key 或完整浏览器 profile。
+
+## 集见 1.1.0 品牌验收
+
+`npm run test:brand` 检查最终构建：首页与安装入口、320/390px 无横向溢出、减少动态效果、已登录根路径回工作区、旧 `xingjian.*` 设置恢复、公开页不丢会话、两端图标真实尺寸、版本与 OG 图片可访问。截图来自临时账号与空工作区，不是私人资料。
+
+`npm run package:extensions` 对两个 ZIP 逐文件重新解压并比对，再输出 SHA-256。`test:extension` 在实际 Chrome / Edge 临时扩展宿主验证导入、阅读、导出和重载持久化。可选权限弹窗仍与预授予运输测试分开报告。

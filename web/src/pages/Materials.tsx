@@ -192,13 +192,13 @@ export function MaterialsPage({ inbox = false }: { inbox?: boolean }) {
       );
       if (format === "json")
         download(
-          `星笺-材料-${bundle.bundle_id}.json`,
+          `集见-材料-${bundle.bundle_id}.json`,
           JSON.stringify(bundle, null, 2),
         );
       else {
         const bytes = await createArchive(wid, bundle);
         download(
-          `星笺-材料-${bundle.bundle_id}.zip`,
+          `集见-材料-${bundle.bundle_id}.zip`,
           bytes.slice().buffer,
           "application/zip",
         );
@@ -477,12 +477,12 @@ export function MaterialsPage({ inbox = false }: { inbox?: boolean }) {
                 ? "没有匹配的资料"
                 : inbox
                   ? "还没有待整理资料"
-                  : "资料库目前为空"
+                  : "还没收进材料"
             }
             description={
               q || group || author
                 ? "尝试更换关键词、成员或星球范围。"
-                : "先连接知识星球读取原文，或导入本地材料包。这里不会生成虚假的示例资料。"
+                : "连接一个星球，先收一小批原文；也可以导入已有材料包。阅读和导出不需要配置模型。"
             }
             action={
               <>
@@ -818,7 +818,7 @@ export function ReaderPage() {
         endpoint(wid, "/export") +
           query({ material_ids: id, annotations: "true" }),
       );
-      download(`星笺-${id}.json`, JSON.stringify(bundle, null, 2));
+      download(`集见-${id}.json`, JSON.stringify(bundle, null, 2));
     });
   }
   const comments = material?.comments ?? [];

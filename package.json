@@ -1,7 +1,7 @@
 {
   "name": "xingjian-workbench",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "engines": {
     "node": ">=24.14.0"
@@ -19,7 +19,10 @@
     "test:extension": "tsx scripts/extension-e2e.ts",
     "test:extension-sync": "tsx scripts/extension-sync-e2e.ts",
     "test:source-anonymous": "tsx scripts/source-smoke.ts",
-    "format:check": "prettier --check server shared scripts/*.ts scripts/*.mjs tests web/src web/tests/*.ts extension/*.ts"
+    "format:check": "prettier --check server shared scripts/*.ts scripts/*.mjs tests web/src web/tests/*.ts extension/*.ts",
+    "assets:brand": "tsx scripts/brand-assets.ts",
+    "package:extensions": "tsx scripts/package-extensions.ts",
+    "test:brand": "tsx scripts/brand-e2e.ts"
   },
   "dependencies": {
     "@fastify/cookie": "^11.0.2",
@@ -51,7 +54,7 @@
     "typescript": "^5.9.3",
     "vite": "^7.1.9"
   },
-  "description": "知识星球采集、Chrome/Edge 本地插件与受控 Agent 知识工作台",
+  "description": "集见：知识星球采集、Chrome/Edge 本地插件与受控 Agent 知识工作台",
   "license": "MIT",
   "repository": {
     "type": "git",

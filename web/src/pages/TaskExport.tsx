@@ -42,7 +42,7 @@ export function TaskExport({
           query({ offset: String(offset), limit: String(limit) }),
       );
       download(
-        `星笺-任务-${job.id}-offset-${offset}.json`,
+        `集见-任务-${job.id}-offset-${offset}.json`,
         JSON.stringify(bundle, null, 2),
       );
       setReceipt(bundle);

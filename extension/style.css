@@ -8,3 +8,5 @@
 @media(max-width:600px){.app{display:block}.sidebar{width:100%;height:auto;position:static;padding:12px;gap:12px;border-bottom:1px solid var(--border);border-right:0}.sidebar nav{flex-direction:row;flex-wrap:wrap}.sidebar .nav{width:auto}.workspace-label{display:none}.topbar{height:auto;padding:12px 18px}.notice{left:12px;right:12px}main{padding:18px}.page-heading h1{font-size:24px}.sidebar>button,.sidebar>.muted{display:none}.filters{display:block}.filters>.field{max-width:100%;margin:8px 0}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 mark{color:var(--text);background:var(--selection,#e7dcc2);border-bottom:1px solid var(--muted);padding:0}
+
+.brand-mark{object-fit:contain;flex-shrink:0}:root[data-theme=graphite] .brand-mark{filter:invert(1)}.first-use{border:1px solid var(--border);border-left:3px solid var(--accent);padding:18px;margin:20px 0;background:var(--surface);border-radius:6px}.first-use p{font-size:13px;color:var(--muted);margin:10px 0}

@@ -406,6 +406,6 @@ export function safeFileName(value: string): string {
     (value
       .replace(/[<>:"/\\|?*\x00-\x1F]/g, "_")
       .trim()
-      .slice(0, 100) || "星笺资料") + ".md"
+      .slice(0, 100) || "集见资料") + ".md"
   );
 }

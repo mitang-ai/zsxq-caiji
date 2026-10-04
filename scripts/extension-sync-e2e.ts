@@ -338,6 +338,7 @@ for (const mode of [
       if (!nativePhase) {
         extensionPath = join(temp, "transport-extension");
         mkdirSync(extensionPath);
+        mkdirSync(join(extensionPath, "icons"));
         for (const name of [
           "manifest.json",
           "ui.js",
@@ -345,6 +346,8 @@ for (const mode of [
           "style.css",
           "workbench.html",
           "sidepanel.html",
+          "icons/mark.svg",
+          ...[16, 32, 48, 128].map((n) => `icons/icon-${n}.png`),
         ]) {
           writeFileSync(
             join(extensionPath, name),

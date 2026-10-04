@@ -268,7 +268,7 @@ export function ArtifactPage() {
         endpoint(wid, "/export") +
           query({ artifact_ids: id, annotations: "true" }),
       );
-      download(`星笺-成果-${id}.json`, JSON.stringify(bundle, null, 2));
+      download(`集见-成果-${id}.json`, JSON.stringify(bundle, null, 2));
     });
   }
   async function saveCopy() {

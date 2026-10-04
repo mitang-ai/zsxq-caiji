@@ -108,7 +108,8 @@ export async function createApp(
   app.get("/api/health", () => ({
     status: "ok",
     service: "xingjian",
-    version: "1.0.0",
+    version: "1.1.0",
+    product: "集见",
     execution: "serial",
     database: "sqlite-wal",
   }));
@@ -169,7 +170,7 @@ if (
     );
   const { app, store, runtime } = await createApp();
   await app.listen({ host, port });
-  process.stdout.write(`星笺 listening http://${host}:${port}\n`);
+  process.stdout.write(`集见 listening http://${host}:${port}\n`);
   let stopControl: (() => void) | undefined,
     closing = false;
   const stop = async () => {

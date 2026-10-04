@@ -25,7 +25,7 @@ export async function pair(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       code: code.trim(),
-      label: label.trim() || "浏览器星笺插件",
+      label: label.trim() || "浏览器集见插件",
     }),
     credentials: "omit",
     redirect: "error",

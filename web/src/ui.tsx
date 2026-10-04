@@ -9,6 +9,7 @@ import {
   type RefObject,
 } from "react";
 import { Link } from "react-router-dom";
+import { BrandMark } from "./Brand";
 import { api, date, endpoint, useApi, useOperation } from "./api";
 import type {
   Artifact,
@@ -47,13 +48,8 @@ export function useWorkbench() {
   return ctx;
 }
 export function Icon({ name, size = 18 }: { name: string; size?: number }) {
+  if (name === "mark") return <BrandMark size={size} />;
   const paths: Record<string, ReactNode> = {
-    mark: (
-      <>
-        <path d="M5 3h9l5 5v13H5z" />
-        <path d="M14 3v6h5M8 13h8M8 17h5" />
-      </>
-    ),
     inbox: (
       <>
         <path d="M4 4h16v15H4zM4 13h5l2 3h2l2-3h5" />

@@ -1,6 +1,6 @@
 import { build } from "esbuild";
 import { build as viteBuild } from "vite";
-import { mkdirSync, writeFileSync, copyFileSync } from "node:fs";
+import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 mkdirSync("dist/server", { recursive: true });
@@ -41,13 +41,22 @@ await build({
   },
 });
 await viteBuild({ configFile: "web/vite.config.ts" });
+// Social clients require an absolute OG image URL; hashed asset remains same-origin.
+const htmlPath = "dist/web/index.html";
+writeFileSync(
+  htmlPath,
+  readFileSync(htmlPath, "utf8").replace(
+    /(property="og:image" content=")\/assets\//,
+    "$1https://zsxq.51wanai.com/assets/",
+  ),
+);
 await import("../extension/build.mjs");
 writeFileSync(
   "dist/package.json",
   JSON.stringify(
     {
       name: "xingjian-release",
-      version: "1.0.0",
+      version: JSON.parse(readFileSync("package.json", "utf8")).version,
       private: true,
       type: "module",
       engines: { node: ">=24.14.0" },

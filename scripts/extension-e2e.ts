@@ -16,7 +16,8 @@ import {
   validateBundle,
 } from "../shared/transfer.js";
 import { readArchive } from "../extension/archive.js";
-import { strFromU8 } from "fflate";
+import { strFromU8, unzipSync } from "fflate";
+import { brand } from "../shared/brand.js";
 
 // Isolated browser profiles and explicit fixture files only; never user profiles.
 mkdirSync("test-output", { recursive: true });
@@ -62,11 +63,31 @@ for (const channel of ["chrome", "msedge"] as const) {
       args: ["--enable-unsafe-extension-debugging"],
       viewport: { width: 1440, height: 960 },
     });
+    const unpacked = join(temp, "release-extension");
+    const entries = unzipSync(
+      readFileSync(
+        resolve(
+          "release",
+          "jijian-" +
+            (channel === "chrome" ? "chrome" : "edge") +
+            "-v" +
+            brand.version +
+            ".zip",
+        ),
+      ),
+    );
+    for (const [name, bytes] of Object.entries(entries)) {
+      assert(
+        !name.startsWith("/") && !name.includes("..") && !name.includes("\\"),
+        "unsafe archive path",
+      );
+      const file = join(unpacked, name);
+      mkdirSync(join(file, ".."), { recursive: true });
+      writeFileSync(file, bytes);
+    }
     const cdp = await context.browser()!.newBrowserCDPSession();
     const result = await cdp.send("Extensions.loadUnpacked", {
-      path: resolve(
-        "extension/dist/" + (channel === "chrome" ? "chrome" : "edge"),
-      ),
+      path: unpacked,
     });
     const page = await context.newPage();
     const errors: string[] = [];

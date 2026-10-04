@@ -1823,7 +1823,7 @@ export async function registerRuntime(
     if (b.method === "initialize")
       return respond({
         protocolVersion: "2025-03-26",
-        serverInfo: { name: "星笺", version: "1.0.0" },
+        serverInfo: { name: "集见", version: "1.1.0" },
         capabilities: { tools: {} },
       });
     if (b.method === "notifications/initialized") return reply.code(202).send();

@@ -1,18 +1,23 @@
 <div align="center">
 
-# 星笺 · Xingjian
+<img src="docs/assets/brand/mark.svg" alt="集见：一页被接住" width="80" />
 
-**把星球里的讨论，整理成可回查、可编辑、可带走的知识。**
+# 集见 · JIJIAN
+
+**好内容，别只收藏。**
+
+把星球里的讨论，整理成用得上的知识。
 
 知识星球采集 · Chrome / Edge 插件 · 受控 Agent 工作台
 
 [![在线体验](https://img.shields.io/badge/在线体验-打开工作台-18181B?style=for-the-badge)](https://zsxq.51wanai.com/)
 [![快速开始](https://img.shields.io/badge/快速开始-本地运行-18181B?style=for-the-badge)](#快速开始)
-[![插件安装](https://img.shields.io/badge/插件安装-Chrome%20%2F%20Edge-18181B?style=for-the-badge)](#浏览器插件)
+[![插件安装](https://img.shields.io/badge/插件安装-Chrome%20%2F%20Edge-18181B?style=for-the-badge)](https://github.com/mitang-ai/zsxq-caiji/releases/latest)
 
 [![CI](https://github.com/mitang-ai/zsxq-caiji/actions/workflows/ci.yml/badge.svg)](https://github.com/mitang-ai/zsxq-caiji/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-52525B?style=flat-square)](LICENSE)
 [![Node](https://img.shields.io/badge/Node-%E2%89%A524.14-52525B?style=flat-square&logo=nodedotjs&logoColor=white)](package.json)
+[![Release](https://img.shields.io/github/v/release/mitang-ai/zsxq-caiji?style=flat-square&color=52525B)](https://github.com/mitang-ai/zsxq-caiji/releases/latest)
 [![GitHub stars](https://img.shields.io/github/stars/mitang-ai/zsxq-caiji?style=flat-square&color=52525B)](https://github.com/mitang-ai/zsxq-caiji/stargazers)
 
 [能做什么](#能做什么) · [两种用法](#两种用法) · [快速开始](#快速开始) · [浏览器插件](#浏览器插件) · [文档与协作](#文档与协作)
@@ -21,13 +26,13 @@
 
 </div>
 
-星球里的帖子、讨论和附件散在不同页面。星笺按来源、作者和版本收进资料库；需要总结时，先确认材料与预算，再让模型生成带引用的草稿。之后可以继续编辑、导出，或留在工作台按专题整理。
+星球里的帖子、讨论和附件散在不同页面。集见按来源、作者和版本收进资料库；需要总结时，先确认材料与预算，再让模型生成带引用的草稿。之后可以继续编辑、导出，或留在工作台按专题整理。
 
 > **不是一键搬空星球。** 官方 MCP 与网页登录是两条采集通道；网页登录不依赖球主开启 MCP，但两者都只处理当前账号有权访问的内容。缺页、不可见附件与失败阶段会保留覆盖说明，不伪装成完整归档。
 
 ## 能做什么
 
-| 你想做的事 | 星笺怎么做 |
+| 你想做的事 | 集见怎么做 |
 | :--- | :--- |
 | 收集某个星球，或某位成员的内容 | 按星球、作者 ID、时间和内容类型选范围；成员范围始终限于当前星球 |
 | 读过之后还能找回来 | 全文搜索、标签、收藏、保存视图、高亮与批注；正文、讨论和原件分别记录覆盖情况 |
@@ -75,7 +80,9 @@ npm start
 
 ## 浏览器插件
 
-完整构建已经生成两个插件目录；单独构建也可以：
+**只想使用插件？** 从 [正式发行页](https://github.com/mitang-ai/zsxq-caiji/releases/latest) 下载 Chrome 或 Edge ZIP，解压后加载，不需要安装 Node。[安装、更新与恢复说明 →](docs/plugin-install.md)
+
+开发者完整构建会生成两个插件目录；单独构建也可以：
 
 ```bash
 npm run build:extension
@@ -108,6 +115,8 @@ npm run format:check
 npm test
 npm run build
 npm run test:e2e
+npm run test:brand
+npm run package:extensions
 npm run test:ops
 ```
 
@@ -116,6 +125,8 @@ npm run test:ops
 </details>
 
 ## 文档与协作
+
+[插件安装](docs/plugin-install.md) · [更新记录](CHANGELOG.md) · [品牌资产](docs/brand.md) · [正式发行](https://github.com/mitang-ai/zsxq-caiji/releases/latest)
 
 | 想了解 | 从这里看 |
 | :--- | :--- |

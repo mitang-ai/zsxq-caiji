@@ -333,8 +333,14 @@ function render(): void {
     e(
       "div",
       { class: "brand" },
-      e("span", { class: "brand-mark" }, "▱"),
-      e("strong", {}, "星笺"),
+      e("img", {
+        class: "brand-mark",
+        src: "icons/mark.svg",
+        alt: "",
+        width: "32",
+        height: "32",
+      }),
+      e("strong", {}, "集见"),
       badge("本机"),
     ),
   );
@@ -422,6 +428,23 @@ function renderCapture(main: HTMLElement): void {
     small("仅操作 wx.zsxq.com 已登录页面；不会导出 Cookie。"),
   );
   main.append(scopeNotice);
+  if (!materials.length)
+    main.append(
+      e(
+        "section",
+        { class: "first-use", "aria-label": "首次使用" },
+        e("strong", {}, "先收一小批，模型稍后再配。"),
+        e(
+          "p",
+          {},
+          "① 登录知识星球 → ② 选范围并采集 → ③ 阅读、整理或导出。材料保存在当前浏览器。",
+        ),
+        line(
+          b("查看本地资料", () => navigate("library")),
+          b("配置模型（可跳过）", () => navigate("settings")),
+        ),
+      ),
+    );
   const form = e("form", { class: "form", id: "capture-form" });
   form.append(
     field("星球 ID", "text", groupFilter, "group_id"),
@@ -2270,8 +2293,8 @@ function renderSync(main: HTMLElement): void {
         "本机设备名称",
         "text",
         navigator.userAgent.includes("Edg/")
-          ? "Edge 星笺插件"
-          : "Chrome 星笺插件",
+          ? "Edge 集见插件"
+          : "Chrome 集见插件",
         "label",
       ),
       e("button", { type: "submit", class: "primary" }, "配对指定工作台"),
@@ -2453,7 +2476,7 @@ async function exportPanel(): Promise<void> {
         const ms = selectedMaterials();
         if (!ms.length) throw new Error("没有所选原文。");
         download(
-          "星笺原文.md",
+          "集见原文.md",
           new Blob([ms.map(markdownMaterial).join("\n\n---\n\n")], {
             type: "text/markdown;charset=utf-8",
           }),
@@ -2463,7 +2486,7 @@ async function exportPanel(): Promise<void> {
         const ms = selectedMaterials();
         if (!ms.length) throw new Error("没有所选原文。");
         download(
-          "星笺资料.csv",
+          "集见资料.csv",
           new Blob([materialsCsv(ms)], { type: "text/csv;charset=utf-8" }),
         );
       }),
@@ -2471,7 +2494,7 @@ async function exportPanel(): Promise<void> {
         const rows = selectedArtifacts();
         if (!rows.length) throw new Error("没有所选成果。");
         download(
-          "星笺成果.md",
+          "集见成果.md",
           new Blob([rows.map(artifactMarkdown).join("\n\n---\n\n")], {
             type: "text/markdown;charset=utf-8",
           }),
@@ -2508,7 +2531,7 @@ async function portableZip(
     }
   const result = zipSync(zip, { level: 6 });
   download(
-    "星笺资料-" + bundle.bundle_id + ".zip",
+    "集见资料-" + bundle.bundle_id + ".zip",
     new Blob([new Uint8Array(result)], { type: "application/zip" }),
   );
   msg("可移植 ZIP 已生成；仅包含本次所选项。");
@@ -2536,7 +2559,7 @@ async function backupZip(): Promise<void> {
       zip["attachments/" + a.hash] = bytes;
     }
   download(
-    "星笺本机备份-" + now().slice(0, 10) + ".zip",
+    "集见本机备份-" + now().slice(0, 10) + ".zip",
     new Blob([new Uint8Array(zipSync(zip, { level: 6 }))], {
       type: "application/zip",
     }),

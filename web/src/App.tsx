@@ -24,6 +24,7 @@ import {
   useApi,
   useOperation,
 } from "./api";
+import { LandingPage, PluginsPage } from "./pages/Public";
 import { MaterialsPage, ReaderPage } from "./pages/Materials";
 import { clearMaterialListStates } from "./listState";
 import { ConnectionsPage, SettingsPage } from "./pages/Settings";
@@ -230,12 +231,18 @@ export function App() {
     );
     setPendingInvite("");
   }
+  if (location.pathname === "/plugins") return <PluginsPage />;
+  if (
+    location.pathname === "/welcome" ||
+    (!session && !checking && !checkError && location.pathname === "/")
+  )
+    return <LandingPage />;
   if (checking)
     return (
       <div className="auth-shell">
         <div className="brand">
           <Icon name="mark" size={26} />
-          <strong>星笺</strong>
+          <strong>集见</strong>
         </div>
         <div className="loading" role="status">
           <span className="spinner" />
@@ -338,7 +345,7 @@ export function App() {
         >
           <Link className="brand" to="/inbox">
             <Icon name="mark" size={25} />
-            <strong>星笺</strong>
+            <strong>集见</strong>
             <span>知识工作台</span>
           </Link>
           <div className="workspace-switch">
@@ -591,9 +598,9 @@ function AuthPage({
         : "回到你的知识工作台";
   return (
     <div className="auth-shell">
-      <Link className="brand" to="/login">
+      <Link className="brand" to="/welcome">
         <Icon name="mark" size={28} />
-        <strong>星笺</strong>
+        <strong>集见</strong>
       </Link>
       <section className="auth-card">
         <p className="eyebrow">独立知识工作台</p>

@@ -1,4 +1,4 @@
-# 星笺 Chrome / Edge MV3 插件
+# 集见 Chrome / Edge MV3 插件
 
 运行 `npm.cmd run build:extension`，在 `chrome://extensions` 或 `edge://extensions` 开发者模式加载本机 `extension/dist/chrome` 或 `extension/dist/edge`。两个产物同源，权限与功能一致；不是浏览器商店发布。
 
